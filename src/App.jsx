@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
+import TaskList from './components/TaskList.jsx'
 import InProg from "./components/InProg.jsx";
-import Todo from "./components/Todo.jsx";
 import Done from "./components/Done.jsx";
 import AddTaskComponent from './components/TaskComponent/AddTaskComponent.jsx'
 
@@ -17,7 +17,8 @@ export default function App() {
     setAdd(prev=> ({...prev, taskPrompt: true}))
   }
   function handleCancel(){
-    setAdd(prev=> ({...prev, taskPrompt: false}))
+    setAdd(prev=> ({...prev, taskPrompt: false}));
+    return setAlert(false);
   }
   function handleSubmit(){
     console.log(taskName)
@@ -40,7 +41,7 @@ export default function App() {
       </section>
       <section className="flex">
         <section className="py-5 px-3">
-          <Todo />
+          <TaskList />
         </section>
         <section className="py-5 px-3">
         {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}

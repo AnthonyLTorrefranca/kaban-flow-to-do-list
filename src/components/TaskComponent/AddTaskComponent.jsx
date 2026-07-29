@@ -1,4 +1,4 @@
-import TaskBtn from "./TaskBtn";
+import TaskBtn from "./TaskBtn.jsx";
 import Alert from './Alert.jsx'
 
 export default function AddTaskComponent({taskName, handleChange, handleCancel, handleSubmit,  alert}) {
