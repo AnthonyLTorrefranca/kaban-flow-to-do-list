@@ -14,14 +14,18 @@ export default function App() {
     return setAlert("idle")
   }
   function addBtn(){
-    setAdd(prev=> ({...prev, taskPrompt: true}))
+    setTaskName("")
+    return setAdd(prev=> ({...prev, taskPrompt: true}))
   }
   function handleDelete(id){
     const updatedTask = taskList.filter(item=> item.id !== id);
     setTaskList(updatedTask)
+    setAdd(prev=> ({...prev, taskPrompt: false}));
+    setTaskName("")
   }
   function handleCancel(){
     setAdd(prev=> ({...prev, taskPrompt: false}));
+    setTaskName("")
     return setAlert("idle");
   }
   function handleMoveUp(index){
@@ -30,15 +34,25 @@ export default function App() {
     if (index+tasks.length === tasks.length) return setAlert("top");
     console.log("top",index+tasks.length, tasks.length)
   }
-  function handleRewrite(){
-    setAdd(()=>({taskPrompt: false}))
-    return setAlert("rewrite");
+  function handleRewrite(index){
+    const selectedTask = taskList[index].text
+    setAdd(prev=> ({...prev, taskPrompt: true}))
+    setTaskName(selectedTask)
+    return setAlert("rewrite")
   }
   function handleMoveDown(index){
     setAlert("idle");
     const tasks = [...taskList];
     if (index+1 === tasks.length) return setAlert("down");
+    if (index < tasks.length){ console.log("movedown")}
     console.log("down", index+1, tasks.length)
+  }
+  function handleCheck(id){
+    const updatedTask = taskList.map(item=> item.id === id ? {...item, isChecked: !item.isChecked} : item);
+    if (taskList.isChecked === true){
+      console.log("true")
+    }
+    setTaskList(updatedTask)
   }
   function handleSubmit(e){
     e.preventDefault();
@@ -51,7 +65,7 @@ export default function App() {
       setAlert("duplicate");
       return setTaskName("");
     }
-    const newTask = {id: crypto.randomUUID(), text: tTask};
+    const newTask = {id: crypto.randomUUID(), text: tTask, ischecked: false};
     setTaskList((prev)=>[...prev, newTask])
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
@@ -67,7 +81,7 @@ export default function App() {
       <div>
         <section className="flex">
           <section className="py-5 px-3">
-            <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleRewrite={handleRewrite} handleDelete={handleDelete} />
+            <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleRewrite={handleRewrite} handleDelete={handleDelete} handleCheck={handleCheck} />
           </section>
           <section className="py-5 px-3">
             {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
