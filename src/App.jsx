@@ -16,15 +16,24 @@ export default function App() {
   function addBtn(){
     setAdd(prev=> ({...prev, taskPrompt: true}))
   }
+  function handleDelete(id){
+    const updatedTask = taskList.filter(item=> item.id !== id);
+    setTaskList(updatedTask)
+  }
   function handleCancel(){
     setAdd(prev=> ({...prev, taskPrompt: false}));
     return setAlert(false);
   }
-  function handleSubmit(){
-    console.log(taskName)
+  function handleSubmit(e){
+    e.preventDefault();
     const tTask = taskName.trim().toLowerCase();
+    const isDuplicate = taskList.some(item=> item.text === tTask)
     if (tTask === ""){
       return setAlert(true)
+    }
+    if (isDuplicate){
+      setAlert("duplicate");
+      return setTaskName("");
     }
     const newTask = {id: crypto.randomUUID(), text: tTask};
     setTaskList((prev)=>[...prev, newTask])
@@ -33,24 +42,26 @@ export default function App() {
   }
   useEffect(()=>console.log(taskList),[taskList])
   return (
-    <div className="px-5 justify-center h-280 bg-slate-900 text-white overflow-hidden">
+    <section className="flex flex-col px-5 h-280 bg-slate-900 text-white overflow-hidden">
       <section className="flex items-center justify-center">
         <h1 className="text-3xl p-5 font-bold text-sky-400">Kanban Flow 🚀</h1>
         <button className="bg-gray-950 p-1 cursor-pointer border-2 rounded-xl"
           onClick={addBtn}>+ New Task</button>
       </section>
-      <section className="flex">
-        <section className="py-5 px-3">
-          <TaskList />
+      <div>
+        <section className="flex">
+          <section className="py-5 px-3">
+            <TaskList taskList={taskList} handleDelete={handleDelete} />
+          </section>
+          <section className="py-5 px-3">
+          {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
+            <InProg className="pb-10" />
+          </section>
+          <section className="py-5 px-3">
+            <Done />
+          </section>
         </section>
-        <section className="py-5 px-3">
-        {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
-          <InProg className="pb-10" />
-        </section>
-        <section className="py-5 px-3">
-          <Done />
-        </section>
-      </section>
-    </div>
+      </div>
+    </section>
   )
 }

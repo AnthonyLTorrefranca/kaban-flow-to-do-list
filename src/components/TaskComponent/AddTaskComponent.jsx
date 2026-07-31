@@ -1,13 +1,13 @@
 import TaskBtn from "./TaskBtn.jsx";
 import Alert from './Alert.jsx'
 
-export default function AddTaskComponent({taskName, handleChange, handleCancel, handleSubmit,  alert}) {
+export default function AddTaskComponent({taskName, handleChange,handleCancel, handleSubmit, alert}) {
   return (
-    <section className="flex flex-col justify-center items-center h-screen z-50 bg-green-400">
+    <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center h-screen z-50 bg-gray-500">
         <Alert alert={alert} />
-        <input type="text" className="border p-5 rounded-3xl text-black" placeholder="Enter your task here..."
-          name="taskName" value={taskName} onChange={(e)=> handleChange(e)} />
+        <h1 className="p-5 text-black">Welcome, pls input your task below!</h1>
+        <input type="text" className="border p-5 rounded-3xl text-black" placeholder="Enter your task here..." name="taskName" value={taskName} onChange={(e)=> handleChange(e)} />
         <TaskBtn handleCancel={handleCancel} handleSubmit={handleSubmit} />
-    </section>
+    </form>
   )
 }
