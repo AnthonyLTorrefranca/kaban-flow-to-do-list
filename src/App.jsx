@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import TaskList from './components/TaskList.jsx'
 import InProg from "./components/InProg.jsx";
 import Done from "./components/Done.jsx";
@@ -8,10 +8,10 @@ export default function App() {
   const [add, setAdd] = useState({taskPrompt: false})
   const [taskName, setTaskName] = useState("")
   const [taskList, setTaskList] = useState([])
-  const [alert, setAlert] = useState(false)
+  const [alert, setAlert] = useState("idle")
   function handleChange(e){
     setTaskName(e.target.value)
-    return setAlert(false)
+    return setAlert("idle")
   }
   function addBtn(){
     setAdd(prev=> ({...prev, taskPrompt: true}))
@@ -22,14 +22,30 @@ export default function App() {
   }
   function handleCancel(){
     setAdd(prev=> ({...prev, taskPrompt: false}));
-    return setAlert(false);
+    return setAlert("idle");
+  }
+  function handleMoveUp(index){
+    const tasks = [...taskList];
+    setAlert("idle");
+    if (index+tasks.length === tasks.length) return setAlert("top");
+    console.log("top",index+tasks.length, tasks.length)
+  }
+  function handleRewrite(){
+    setAdd(()=>({taskPrompt: false}))
+    return setAlert("rewrite");
+  }
+  function handleMoveDown(index){
+    setAlert("idle");
+    const tasks = [...taskList];
+    if (index+1 === tasks.length) return setAlert("down");
+    console.log("down", index+1, tasks.length)
   }
   function handleSubmit(e){
     e.preventDefault();
     const tTask = taskName.trim().toLowerCase();
     const isDuplicate = taskList.some(item=> item.text === tTask)
     if (tTask === ""){
-      return setAlert(true)
+      return setAlert("blank")
     }
     if (isDuplicate){
       setAlert("duplicate");
@@ -40,7 +56,7 @@ export default function App() {
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
   }
-  useEffect(()=>console.log(taskList),[taskList])
+  // useEffect(()=>console.log(taskList),[taskList])
   return (
     <section className="flex flex-col px-5 h-280 bg-slate-900 text-white overflow-hidden">
       <section className="flex items-center justify-center">
@@ -51,11 +67,11 @@ export default function App() {
       <div>
         <section className="flex">
           <section className="py-5 px-3">
-            <TaskList taskList={taskList} handleDelete={handleDelete} />
+            <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleRewrite={handleRewrite} handleDelete={handleDelete} />
           </section>
           <section className="py-5 px-3">
-          {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
-            <InProg className="pb-10" />
+            {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
+              <InProg className="pb-10" />
           </section>
           <section className="py-5 px-3">
             <Done />
