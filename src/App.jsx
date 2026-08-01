@@ -1,10 +1,11 @@
-import {useState, useEffect} from 'react'
+import {useState,useEffect, useRef} from 'react'
 import TaskList from './components/TaskList.jsx'
 import InProg from "./components/InProg.jsx";
 import Done from "./components/Done.jsx";
 import AddTaskComponent from './components/TaskComponent/AddTaskComponent.jsx'
 
 export default function App() {
+  const inputRef = useRef(null);
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false})
   const [taskName, setTaskName] = useState("")
   const [taskList, setTaskList] = useState([])
@@ -29,7 +30,7 @@ export default function App() {
     const selectedTask = taskList[index].text
     setAdd(prev=> ({...prev, taskPrompt: true, isEdit: true}))
     setTaskName(selectedTask)
-    console.log(add, taskName)
+    console.log(add, selectedTask)
     return setAlert("edit")
   }
   function handleCancel(){
@@ -62,7 +63,7 @@ export default function App() {
     setTaskList(updatedTask)
     console.log("handleDone")
   }
-  function handleSubmit(e){
+  function handleSubmit(e, index){
     e.preventDefault();
     const tTask = taskName.trim();
     const isDuplicate = taskList.some(item=> item.text === tTask.toLowerCase())
@@ -70,15 +71,19 @@ export default function App() {
       return setAlert("blank")
     }
     if (isDuplicate){
-      setAlert("duplicate");
-      return setTaskName("");
+      return setAlert("duplicate");
+    }
+    if (add.isEdit === true){
+      setTaskList(prev=> prev.map(item=> item.id !== index ? {...item, text: tTask} : item));
+      setAdd(()=> ({taskPrompt: false, isEdit: false}))
+      return setTaskName("") 
     }
     const newTask = {id: crypto.randomUUID(), text: tTask, isDone: false};
     setTaskList((prev)=>[...prev, newTask])
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
   }
-  useEffect(()=>console.log(taskList),[taskList])
+  // useEffect(() => { // if (inputRef.current) { //   inputRef.current.focus(); // } // }, add.taskPrompt]);
   return (
     <section className="flex flex-col px-5 h-280 bg-slate-900 text-white overflow-hidden">
       <section className="flex items-center justify-center">
@@ -92,7 +97,7 @@ export default function App() {
             <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
           </section>
           <section className="py-5 px-3">
-            {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
+            {add.taskPrompt && <AddTaskComponent ref={inputRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
               <InProg className="pb-10" />
           </section>
           <section className="py-5 px-3">
