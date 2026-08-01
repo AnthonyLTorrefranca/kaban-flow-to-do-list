@@ -1,11 +1,11 @@
-export default function TaskList({alert, taskList, handleMoveUp, handleMoveDown, handleRewrite, handleDelete, handleCheck}) {
+export default function TaskList({alert, taskList, handleMoveUp, handleMoveDown, handleEdit, handleDelete, handleDone}) {
   return (
     <>
       <section className="flex flex-col items-center justify-baseline h-screen w-150 p-10 bg-gray-500  border">
         <section className="header">
           {alert === "idle" && <p className="text-2xl">Task List</p>}
           {alert === "blank" && <p className="text-2xl">Task List</p>}
-          {alert === "rewrite" && <p className="text-2xl">Rewrite task mode.</p>}
+          {alert === "edit" && <p className="text-2xl">Edit task mode.</p>}
           {alert === "duplicate" && <p className="text-2xl">Task List</p>}
           {alert === "down" && <p className="text-2xl text-red-500">All the way down!</p>}
           {alert === "top" && <p className="text-2xl text-red-500">All the way up!</p>}
@@ -21,12 +21,12 @@ export default function TaskList({alert, taskList, handleMoveUp, handleMoveDown,
                 <section className="taskBtn flex flex-row items-center justify-center m-3 pl-3">
                   <button className="border rounded-2xl p-3 mx-3 cursor-pointer text-black" onClick={()=> handleMoveUp(index)}>☝️</button>
                   <button className="border rounded-2xl p-3 mx-3 cursor-pointer text-black" onClick={()=> handleMoveDown(index)}>👇</button>
-                  <button className="border rounded-2xl p-3 mx-3 cursor-pointer text-black" onClick={()=> handleRewrite(index)}>❔</button>
+                  <button className="border rounded-2xl p-3 mx-3 cursor-pointer text-black" onClick={()=> handleEdit(index)}>✏️</button>
                 </section>
               <section className="modeBtn">
                 <button className="border rounded-2xl p-3 mx-3 mb-2 cursor-pointer text-black hover:bg-green-300">Task List</button>
                 <button className="border rounded-2xl p-3 mx-3 mb-2 cursor-pointer text-black hover:bg-green-300">In progress</button>
-                <button className="border rounded-2xl p-3 mx-3 mb-2 cursor-pointer text-black hover:bg-green-300" onClick={()=> handleCheck(item.index)}>Done</button>
+                <button className="border rounded-2xl p-3 mx-3 mb-2 cursor-pointer text-black hover:bg-green-300" onClick={()=> handleDone(index)}>Done</button>
               </section>
           </section> )}
         </ul>

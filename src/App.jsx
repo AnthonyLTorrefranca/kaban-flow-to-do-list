@@ -1,11 +1,11 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import TaskList from './components/TaskList.jsx'
 import InProg from "./components/InProg.jsx";
 import Done from "./components/Done.jsx";
 import AddTaskComponent from './components/TaskComponent/AddTaskComponent.jsx'
 
 export default function App() {
-  const [add, setAdd] = useState({taskPrompt: false})
+  const [add, setAdd] = useState({taskPrompt: false, isEdit: false})
   const [taskName, setTaskName] = useState("")
   const [taskList, setTaskList] = useState([])
   const [alert, setAlert] = useState("idle")
@@ -14,14 +14,23 @@ export default function App() {
     return setAlert("idle")
   }
   function addBtn(){
-    setTaskName("")
+    setAlert("idle");
+    setTaskName("");
     return setAdd(prev=> ({...prev, taskPrompt: true}))
   }
   function handleDelete(id){
+    setAlert("idle");
     const updatedTask = taskList.filter(item=> item.id !== id);
     setTaskList(updatedTask)
     setAdd(prev=> ({...prev, taskPrompt: false}));
     setTaskName("")
+  }
+  function handleEdit(index){
+    const selectedTask = taskList[index].text
+    setAdd(prev=> ({...prev, taskPrompt: true, isEdit: true}))
+    setTaskName(selectedTask)
+    console.log(add, taskName)
+    return setAlert("edit")
   }
   function handleCancel(){
     setAdd(prev=> ({...prev, taskPrompt: false}));
@@ -29,35 +38,34 @@ export default function App() {
     return setAlert("idle");
   }
   function handleMoveUp(index){
-    const tasks = [...taskList];
+    const updatedTask = [...taskList];
     setAlert("idle");
-    if (index+tasks.length === tasks.length) return setAlert("top");
-    console.log("top",index+tasks.length, tasks.length)
-  }
-  function handleRewrite(index){
-    const selectedTask = taskList[index].text
-    setAdd(prev=> ({...prev, taskPrompt: true}))
-    setTaskName(selectedTask)
-    return setAlert("rewrite")
+    if (index+updatedTask.length === updatedTask.length) return setAlert("top");
+    if (index < updatedTask.length){
+      [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
+      setTaskList(updatedTask)
+    }
+    console.log("top", index, updatedTask.length)
   }
   function handleMoveDown(index){
     setAlert("idle");
-    const tasks = [...taskList];
-    if (index+1 === tasks.length) return setAlert("down");
-    if (index < tasks.length){ console.log("movedown")}
-    console.log("down", index+1, tasks.length)
-  }
-  function handleCheck(id){
-    const updatedTask = taskList.map(item=> item.id === id ? {...item, isChecked: !item.isChecked} : item);
-    if (taskList.isChecked === true){
-      console.log("true")
+    const updatedTask = [...taskList];
+    if (index+1 === updatedTask.length) return setAlert("down");
+    if (index < updatedTask.length){ 
+      [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]]
+      setTaskList(updatedTask)
     }
+    console.log("movedown")
+  }
+  function handleDone(index){
+    const updatedTask = taskList.map(item=> item.isDone === index ? {...item, isDone: !item.isDone} : item)
     setTaskList(updatedTask)
+    console.log("handleDone")
   }
   function handleSubmit(e){
     e.preventDefault();
-    const tTask = taskName.trim().toLowerCase();
-    const isDuplicate = taskList.some(item=> item.text === tTask)
+    const tTask = taskName.trim();
+    const isDuplicate = taskList.some(item=> item.text === tTask.toLowerCase())
     if (tTask === ""){
       return setAlert("blank")
     }
@@ -65,12 +73,12 @@ export default function App() {
       setAlert("duplicate");
       return setTaskName("");
     }
-    const newTask = {id: crypto.randomUUID(), text: tTask, ischecked: false};
+    const newTask = {id: crypto.randomUUID(), text: tTask, isDone: false};
     setTaskList((prev)=>[...prev, newTask])
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
   }
-  // useEffect(()=>console.log(taskList),[taskList])
+  useEffect(()=>console.log(taskList),[taskList])
   return (
     <section className="flex flex-col px-5 h-280 bg-slate-900 text-white overflow-hidden">
       <section className="flex items-center justify-center">
@@ -81,7 +89,7 @@ export default function App() {
       <div>
         <section className="flex">
           <section className="py-5 px-3">
-            <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleRewrite={handleRewrite} handleDelete={handleDelete} handleCheck={handleCheck} />
+            <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
           </section>
           <section className="py-5 px-3">
             {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
