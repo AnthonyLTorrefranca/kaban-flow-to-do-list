@@ -1,4 +1,4 @@
-import {useState,} from 'react'
+import {useState, useEffect} from 'react'
 import TaskList from './components/TaskList.jsx'
 import InProg from "./components/InProg.jsx";
 import Done from "./components/Done.jsx";
@@ -11,12 +11,13 @@ export default function App() {
   const [taskList, setTaskList] = useState([])
   const [alert, setAlert] = useState("idle")
   function handleChange(e){
+    setAlert("idle");
     return setTaskName(e.target.value)
   }
   function addBtn(){
     setAlert("idle");
     setTaskName("");
-    return setAdd(prev=> ({...prev, taskPrompt: true}))
+    return setAdd(()=> ({taskPrompt: true, isEdit: false}))
   }
   function handleDelete(id){
     setAlert("idle");
@@ -72,6 +73,9 @@ export default function App() {
     if (isDuplicate){
       return setAlert("duplicate");
     }
+    if (taskName.length >= 62){ 
+      return "length"
+    }
     if (add.isEdit === true){
       setTaskList(prev=> prev.map(item=> item.id !== index ? {...item, text: tTask} : item));
       setAdd(()=> ({taskPrompt: false, isEdit: false}))
@@ -82,9 +86,14 @@ export default function App() {
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
   }
-  // useEffect(() => { // if (inputRef.current) { //   inputRef.current.focus(); // } // }, add.taskPrompt]);
+  useEffect(() => {
+    if (taskName.length >= 60){
+      setAlert("duplicate")
+      return 
+    }
+  },[taskName]);
   return (
-    <section className="flex flex-col px-5 h-280 bg-slate-900 text-white overflow-hidden">
+    <section className="flex flex-col px-5 bg-slate-900 text-white overflow-hidden">
       <section className="flex items-center justify-center">
         <h1 className="text-3xl p-5 font-bold text-sky-400">Kanban Flow 🚀</h1>
         <button className="bg-gray-950 p-1 cursor-pointer border-2 rounded-xl"
@@ -97,10 +106,10 @@ export default function App() {
           </section>
           <section className="py-5 px-3">
             {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
-              <InProg className="pb-10" />
+            <InProg className="pb-10" />
           </section>
           <section className="py-5 px-3">
-            <Done />
+            <Done taskList={taskList} />
           </section>
         </section>
       </div>

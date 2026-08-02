@@ -1,6 +1,6 @@
-import TaskBtn from "./TaskBtn.jsx";
+import TaskBtn from "./AddTaskBtn.jsx";
 import Alert from './Alert.jsx'
-
+// section for registering new task
 export default function AddTaskComponent({taskName, handleChange,handleCancel, handleSubmit, alert}) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center h-screen z-50 bg-gray-500">
