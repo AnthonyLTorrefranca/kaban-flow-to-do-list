@@ -11,7 +11,6 @@ export default function App() {
   const [taskList, setTaskList] = useState([])
   const [alert, setAlert] = useState("idle")
   function handleChange(e){
-    setAlert("idle");
     return setTaskName(e.target.value)
   }
   function addBtn(){
@@ -82,6 +81,7 @@ export default function App() {
       return setTaskName("") 
     }
     const newTask = {id: crypto.randomUUID(), text: tTask, isDone: false};
+    setAlert("idle")
     setTaskList((prev)=>[...prev, newTask])
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
