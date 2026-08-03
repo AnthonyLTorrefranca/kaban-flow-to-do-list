@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import TaskList from './components/TaskList.jsx'
 import InProg from "./components/InProg.jsx";
 import Done from "./components/Done.jsx";
@@ -6,21 +6,21 @@ import AddTaskComponent from './components/TaskComponent/AddTaskComponent.jsx'
 
 export default function App() {
   // const inputRef = useRef(null);
+  // function textInput(){
+  //   const focusInput= () =>{
+  //     inputRef.current.focus();
+  //   }
+  // }
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false})
   const [taskName, setTaskName] = useState("")
   const [taskList, setTaskList] = useState([])
   const [alert, setAlert] = useState("idle")
-  
-  const handleDone = (id) => {
-    // setTaskList((list) =>
-    //   list.map((item) =>
-    //     item.id === id ? { ...item, done: true } : item
-    //   )
-    // );
-    setTaskList((list)=> 
-      list.map((item)=> ({isDone: !item.isDone}) ))
-    console.log("done", taskList)
+  function handleDone(id){
+    setTaskList(prev=> prev.map(item=> item.id === id ? ({...item, isDone: !item.isDone}) : item))
+    console.log(taskList)
   };
+
+  // useEffect(()=> console.log(taskList(prev=> [...prev, prev.isDone])),[taskList])
 
   function handleChange(e){
     return setTaskName(e.target.value)
@@ -69,11 +69,6 @@ export default function App() {
     }
     console.log("movedown")
   }
-  // function handleDone(index){
-  //   const updatedTask = taskList.map(item=> item.isDone === index ? {...item, isDone: !item.isDone} : item)
-  //   setTaskList(updatedTask)
-  //   console.log("handleDone")
-  // }
   function handleSubmit(e, index){
     e.preventDefault();
     const tTask = taskName.trim();
@@ -83,9 +78,6 @@ export default function App() {
     }
     if (isDuplicate){
       return setAlert("duplicate");
-    }
-    if (taskName.length >= 62){ 
-      return "length"
     }
     if (add.isEdit === true){
       setTaskList(prev=> prev.map(item=> item.id !== index ? {...item, text: tTask} : item));

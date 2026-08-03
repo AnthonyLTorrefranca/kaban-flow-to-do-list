@@ -1,7 +1,7 @@
 import TaskListMove from "./TaskComponent/TaskListMove";
 import TaskListTransfer from "./TaskComponent/TaskListTransfer";
 
-export default function Done({taskList}) {
+export default function Done({taskList, handleDelete, handleEdit, handleMoveUp, handleMoveDown, handleDone}) {
   return (
     <>
       <section className="flex flex-col items-center justify-baseline h-screen w-150 p-10 bg-gray-500   border">
@@ -10,9 +10,12 @@ export default function Done({taskList}) {
         </section>
         <section className="taskList pt-10">
           <ul>
-            <li>{taskList.text}</li>
+            {taskList.filter(item=> item.Done).map((item, id)=>
+            <li key={item.id}>{item.text}
               <TaskListMove />
               <TaskListTransfer />
+            </li>
+            )}
           </ul>
         </section>
       </section>

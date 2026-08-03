@@ -1,10 +1,10 @@
 import TaskListMove from './TaskComponent/TaskListMove.jsx'
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
 
-export default function TaskListHandler({index, taskList, handleDelete, handleMoveUp, handleMoveDown, handleEdit, handleDone}) {
+export default function TaskListHandler({taskList, handleDelete, handleMoveUp, handleMoveDown, handleEdit, handleDone}) {
   return (
     <>
-      {taskList.map((item, index)=>
+      {taskList.filter((list)=> list.isDone === false).map((item, index)=>
         <section className="pt-5 px-5 m-5 border-full rounded-2xl bg-slate-800 border border-slate-600/50 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
             <section className="taskGrp flex flex-row items-baseline justify-around">
             <ul className="lists py-10">
@@ -14,7 +14,7 @@ export default function TaskListHandler({index, taskList, handleDelete, handleMo
             </section>
           <section className="actionBtn">
             <TaskListMove index={index} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} />
-            <TaskListTransfer handleDone={handleDone} />
+            <TaskListTransfer id={item.id} handleDone={handleDone} />
           </section>
         </section>)}
     </>
