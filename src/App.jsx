@@ -10,6 +10,15 @@ export default function App() {
   const [taskName, setTaskName] = useState("")
   const [taskList, setTaskList] = useState([])
   const [alert, setAlert] = useState("idle")
+  
+  const handleDone = (id) => {
+    setTaskList((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, done: true } : item
+      )
+    );
+  };
+
   function handleChange(e){
     return setTaskName(e.target.value)
   }
@@ -57,11 +66,11 @@ export default function App() {
     }
     console.log("movedown")
   }
-  function handleDone(index){
-    const updatedTask = taskList.map(item=> item.isDone === index ? {...item, isDone: !item.isDone} : item)
-    setTaskList(updatedTask)
-    console.log("handleDone")
-  }
+  // function handleDone(index){
+  //   const updatedTask = taskList.map(item=> item.isDone === index ? {...item, isDone: !item.isDone} : item)
+  //   setTaskList(updatedTask)
+  //   console.log("handleDone")
+  // }
   function handleSubmit(e, index){
     e.preventDefault();
     const tTask = taskName.trim();
@@ -86,12 +95,12 @@ export default function App() {
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
   }
-  useEffect(() => {
-    if (taskName.length >= 60){
-      setAlert("duplicate")
-      return 
-    }
-  },[taskName]);
+  // useEffect(() => {
+  //   if (taskName.length >= 60){
+  //     setAlert("duplicate")
+  //     return 
+  //   }
+  // },[taskName]);
   return (
     <section className="flex flex-col px-5 bg-slate-900 text-white overflow-hidden">
       <section className="flex items-center justify-center">
