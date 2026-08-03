@@ -12,11 +12,14 @@ export default function App() {
   const [alert, setAlert] = useState("idle")
   
   const handleDone = (id) => {
-    setTaskList((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, done: true } : item
-      )
-    );
+    // setTaskList((list) =>
+    //   list.map((item) =>
+    //     item.id === id ? { ...item, done: true } : item
+    //   )
+    // );
+    setTaskList((list)=> 
+      list.map((item)=> ({isDone: !item.isDone}) ))
+    console.log("done", taskList)
   };
 
   function handleChange(e){
@@ -95,33 +98,26 @@ export default function App() {
     setTaskName("")
     setAdd((prev)=> ({...prev, taskPrompt: false}))
   }
-  // useEffect(() => {
-  //   if (taskName.length >= 60){
-  //     setAlert("duplicate")
-  //     return 
-  //   }
-  // },[taskName]);
-  return (
-    <section className="flex flex-col px-5 bg-slate-900 text-white overflow-hidden">
-      <section className="flex items-center justify-center">
-        <h1 className="text-3xl p-5 font-bold text-sky-400">Kanban Flow 🚀</h1>
-        <button className="bg-gray-950 p-1 cursor-pointer border-2 rounded-xl"
-          onClick={addBtn}>+ New Task</button>
-      </section>
-      <div>
-        <section className="flex">
-          <section className="py-5 px-3">
-            <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
-          </section>
-          <section className="py-5 px-3">
-            {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
-            <InProg className="pb-10" />
-          </section>
-          <section className="py-5 px-3">
-            <Done taskList={taskList} />
-          </section>
-        </section>
-      </div>
+return (
+  <section className="flex flex-col px-5 bg-slate-900 text-white overflow-hidden">
+    <section className="flex items-center justify-center">
+      <h1 className="text-3xl p-5 font-bold text-sky-400">Kanban Flow 🚀</h1>
+      <button className="bg-gray-950 p-1 cursor-pointer border-2 rounded-xl" onClick={addBtn}>+ New Task</button>
     </section>
+    <div>
+      <section className="flex">
+        <section className="py-5 px-3">
+          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
+        </section>
+        <section className="py-5 px-3">
+          {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
+          <InProg className="pb-10" />
+        </section>
+        <section className="py-5 px-3">
+          <Done taskList={taskList} />
+        </section>
+      </section>
+    </div>
+  </section>
   )
 }
