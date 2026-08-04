@@ -1,31 +1,33 @@
-import {useState} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import TaskList from './components/TaskList.jsx'
 import InProg from "./components/InProg.jsx";
 import Done from "./components/Done.jsx";
 import AddTaskComponent from './components/TaskComponent/AddTaskComponent.jsx'
 
 export default function App() {
-  // const inputRef = useRef(null);
-  // function textInput(){
-  //   const focusInput= () =>{
-  //     inputRef.current.focus();
-  //   }
-  // }
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false})
   const [taskName, setTaskName] = useState("")
   const [taskList, setTaskList] = useState([])
   const [alert, setAlert] = useState("idle")
+
+  const inputRef = useRef(null)
+
   function handleDone(id){
     setTaskList(prev=> prev.map(item=> item.id === id ? ({...item, isDone: !item.isDone}) : item))
     console.log(taskList)
   };
 
-  // useEffect(()=> console.log(taskList(prev=> [...prev, prev.isDone])),[taskList])
+  useEffect(()=> {
+    if (add.taskPrompt){
+      inputRef.current.focus();
+    }
+    },[add.taskPrompt])
 
   function handleChange(e){
     return setTaskName(e.target.value)
   }
   function addBtn(){
+    console.log(inputRef.current, "true")
     setAlert("idle");
     setTaskName("");
     return setAdd(()=> ({taskPrompt: true, isEdit: false}))
@@ -102,7 +104,7 @@ return (
           <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
         </section>
         <section className="py-5 px-3">
-          {add.taskPrompt && <AddTaskComponent taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
+          {add.taskPrompt && <AddTaskComponent inputRef={inputRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
           <InProg className="pb-10" />
         </section>
         <section className="py-5 px-3">
