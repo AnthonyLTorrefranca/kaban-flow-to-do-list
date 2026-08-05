@@ -14,28 +14,24 @@ export default function App() {
 
   useEffect(()=> {
     if (add.taskPrompt){
-      taskRef.current.focus()
+      return taskRef.current.focus()
     }
   }, [add.taskPrompt])
-
+  
   function handleEdit(index){
-    setAlert("edit")
+    setAdd(prev=> ({...prev, taskPrompt: true, isEdit: true}));
     const selectedTask = taskList[index];
-    setAdd(prev=> ({...prev, taskPrompt: true, isEdit: true}))
-    setTaskName(selectedTask.text)
+    setTaskName(selectedTask.text);
     setEditingId(selectedTask.id)
-    console.log("handleEdit")
+    console.log("edit")
   }
-  // function handleDone(id){
-  //   setTaskList(prev=> prev.map(item=> item.id === id ? {...item, isDone: !item.isDone} : item))
-  //   console.log(taskList)
-  // }
   function handleChange(e){
     return setTaskName(e.target.value)
   }
   function addBtn(){
     setAlert("idle");
     setTaskName("");
+    console.log("addBtn")
     return setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: false}))
   }
   function handleDelete(id){
@@ -44,11 +40,13 @@ export default function App() {
     setTaskList(updatedTask)
     setAdd(prev=> ({...prev, taskPrompt: false}));
     setTaskName("")
+    console.log("handleDelete")
   }
-
+  
   function handleCancel(){
     setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
     setTaskName("")
+    console.log("handleCancel")
     return setAlert("idle");
   }
   function handleMoveUp(index){
@@ -76,14 +74,18 @@ export default function App() {
     const tTask = taskName.trim();
     const isDuplicate = taskList.some(item=> item.id !== editingId && item.text === tTask)
     if (tTask === ""){
+      console.log("blank")
       return setAlert("blank");
     }
     if (isDuplicate){
+      console.log("isDup")
       return setAlert("duplicate");
     }
     if (add.isEdit){
       setTaskList(task=> task.map(item=> item.id === editingId ? {...item, text: tTask} : item))
-      setTaskName("")
+      setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}))
+      setTaskName("");
+      setEditingId(null)
       return;
     }
     const newTask = {id: crypto.randomUUID(), text: tTask, isDone: false};
