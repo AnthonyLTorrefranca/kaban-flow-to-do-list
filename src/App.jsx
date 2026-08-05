@@ -17,18 +17,21 @@ export default function App() {
       return taskRef.current.focus()
     }
   }, [add.taskPrompt])
+  useEffect(()=> {console.log(add.isEdit, "UEisEdit", editingId)},[add.isEdit, editingId])
   
   function handleEdit(index){
-    setAdd(prev=> ({...prev, taskPrompt: true, isEdit: true}));
+    setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
     const selectedTask = taskList[index];
-    setTaskName(selectedTask.text);
     setEditingId(selectedTask.id)
+    setTaskName(selectedTask.text)
     console.log("edit")
+    return 
   }
   function handleChange(e){
     return setTaskName(e.target.value)
   }
   function addBtn(){
+    setEditingId(null)
     setAlert("idle");
     setTaskName("");
     console.log("addBtn")
@@ -42,11 +45,11 @@ export default function App() {
     setTaskName("")
     console.log("handleDelete")
   }
-  
   function handleCancel(){
     setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
-    setTaskName("")
-    console.log("handleCancel")
+    console.log("handleCancel");
+    setEditingId(null)
+    setTaskName("");
     return setAlert("idle");
   }
   function handleMoveUp(index){
@@ -83,11 +86,12 @@ export default function App() {
     }
     if (add.isEdit){
       setTaskList(task=> task.map(item=> item.id === editingId ? {...item, text: tTask} : item))
-      setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}))
-      setTaskName("");
+      setAdd((prev)=> ({...prev, taskPrompt: false}))
       setEditingId(null)
-      return;
+      setTaskName("")
+      return
     }
+    console.log(add.isEdit)
     const newTask = {id: crypto.randomUUID(), text: tTask, isDone: false};
     setAdd((prev)=> ({...prev, taskPrompt: false}))
     setTaskList((prev)=>[...prev, newTask])
