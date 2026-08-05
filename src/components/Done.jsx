@@ -12,11 +12,13 @@ export default function Done({taskList,
         </section>
         <section className="taskList pt-10">
           <ul>
-            {taskList.filter(item=> item.Done).map((item, id)=>
-            <li key={item.id}>{item.text}
-              <TaskListMove />
-              <TaskListTransfer />
-            </li>
+            {taskList
+              .filter(item=> item.isDone)
+              .map((item, id)=>
+                <li key={item.id}>{item.text}
+                  <TaskListMove />
+                  <TaskListTransfer />
+                </li>
             )}
           </ul>
         </section>

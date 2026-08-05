@@ -6,11 +6,11 @@ import AddTaskComponent from './components/TaskComponent/AddTaskComponent.jsx'
 
 export default function App() {
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false});
+  const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
   const [taskList, setTaskList] = useState([]);
   const [alert, setAlert] = useState("idle");
   const taskRef = useRef(null);
-  const [editingId, setEditingId] = useState(null)
 
   useEffect(()=> {
     if (add.taskPrompt){
@@ -18,7 +18,13 @@ export default function App() {
     }
   }, [add.taskPrompt])
   useEffect(()=> {console.log(add.isEdit, "UEisEdit", editingId)},[add.isEdit, editingId])
-  
+
+  // ✅ CORRECT
+  function handleDone(id){
+    setAlert("idle")
+    setTaskList(prev => 
+      prev.map(item => item.id === id ? {...item, isDone: !item.isDone} : item))
+  }
   function handleEdit(index){
     setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
     const selectedTask = taskList[index];
@@ -31,17 +37,19 @@ export default function App() {
     return setTaskName(e.target.value)
   }
   function addBtn(){
+    setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: false}))
     setEditingId(null)
     setAlert("idle");
     setTaskName("");
     console.log("addBtn")
-    return setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: false}))
+    return 
   }
   function handleDelete(id){
-    setAlert("idle");
     const updatedTask = taskList.filter(item=> item.id !== id);
+    setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
+    setEditingId(null)
     setTaskList(updatedTask)
-    setAdd(prev=> ({...prev, taskPrompt: false}));
+    setAlert("idle");
     setTaskName("")
     console.log("handleDelete")
   }
@@ -65,12 +73,12 @@ export default function App() {
   function handleMoveDown(index){
     setAlert("idle");
     const updatedTask = [...taskList];
-    if (index+1 === updatedTask.length) return setAlert("down");
+    if (index+2 === updatedTask.length) return setAlert("down");
     if (index < updatedTask.length){ 
       [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]]
       setTaskList(updatedTask)
     }
-    console.log("movedown")
+    console.log("movedown", index+3, updatedTask.length)
   }
   function handleSubmit(e){
     e.preventDefault();
@@ -86,7 +94,7 @@ export default function App() {
     }
     if (add.isEdit){
       setTaskList(task=> task.map(item=> item.id === editingId ? {...item, text: tTask} : item))
-      setAdd((prev)=> ({...prev, taskPrompt: false}))
+      setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
       setEditingId(null)
       setTaskName("")
       return
@@ -107,9 +115,7 @@ return (
     <div>
       <section className="flex">
         <section className="py-5 px-3 ">
-          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} 
-          // handleDone={handleDone}
-           />
+          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
         </section>
         <section className="py-5 px-3">
           {add.taskPrompt && <AddTaskComponent taskRef={taskRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
