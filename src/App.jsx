@@ -117,7 +117,7 @@ return (
           <InProg className="pb-10" taskList={taskList} />
         </section>
         <section className="py-5 px-3">
-          <Done taskList={taskList} handleDelete={handleDelete} handleDone={handleDone} />
+          <Done taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
         </section>
       </section>
     </div>
