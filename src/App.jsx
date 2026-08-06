@@ -17,8 +17,12 @@ export default function App() {
       return taskRef.current.focus()
     }
   }, [add.taskPrompt])
-  useEffect(()=> {console.log(add.isEdit, "UEisEdit", editingId)},[add.isEdit, editingId])
+  useEffect(()=> {console.log(taskList, "UEtaskList",  Boolean(taskList.isDone))},[taskList, taskList.isDone])
   
+  function handleDone(id){
+    setTaskList(prevTasks=> 
+      prevTasks.map(item=> item.id === id ? {...item, isDone: !item.isDone}: item))
+  }
   function handleEdit(index){
     setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
     const selectedTask = taskList[index];
@@ -91,7 +95,6 @@ export default function App() {
       setTaskName("")
       return
     }
-    console.log(add.isEdit)
     const newTask = {id: crypto.randomUUID(), text: tTask, isDone: false};
     setAdd((prev)=> ({...prev, taskPrompt: false}))
     setTaskList((prev)=>[...prev, newTask])
@@ -107,16 +110,14 @@ return (
     <div>
       <section className="flex">
         <section className="py-5 px-3 ">
-          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} 
-          // handleDone={handleDone}
-           />
+          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
         </section>
         <section className="py-5 px-3">
           {add.taskPrompt && <AddTaskComponent taskRef={taskRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
           <InProg className="pb-10" taskList={taskList} />
         </section>
         <section className="py-5 px-3">
-          <Done taskList={taskList} />
+          <Done taskList={taskList} handleDelete={handleDelete} handleDone={handleDone} />
         </section>
       </section>
     </div>
