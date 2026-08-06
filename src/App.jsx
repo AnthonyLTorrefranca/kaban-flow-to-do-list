@@ -17,13 +17,12 @@ export default function App() {
       return taskRef.current.focus()
     }
   }, [add.taskPrompt])
-  useEffect(()=> {console.log(add.isEdit, "UEisEdit", editingId)},[add.isEdit, editingId])
+  useEffect(()=> {console.log(taskList, "UEtaskList",  Boolean(taskList.isDone))},[taskList, taskList.isDone])
 
-  // ✅ CORRECT
   function handleDone(id){
-    setAlert("idle")
-    setTaskList(prev => 
-      prev.map(item => item.id === id ? {...item, isDone: !item.isDone} : item))
+    setAlert("idle");
+    setTaskList(prevTasks=> 
+      prevTasks.map(item=> item.id === id ? {...item, isDone: !item.isDone}: item))
   }
   function handleEdit(index){
     setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
@@ -99,7 +98,6 @@ export default function App() {
       setTaskName("")
       return
     }
-    console.log(add.isEdit)
     const newTask = {id: crypto.randomUUID(), text: tTask, isDone: false};
     setAdd((prev)=> ({...prev, taskPrompt: false}))
     setTaskList((prev)=>[...prev, newTask])
@@ -122,7 +120,7 @@ return (
           <InProg className="pb-10" taskList={taskList} />
         </section>
         <section className="py-5 px-3">
-          <Done taskList={taskList} />
+          <Done alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
         </section>
       </section>
     </div>
