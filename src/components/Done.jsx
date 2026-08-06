@@ -1,6 +1,6 @@
-import TaskListMove from "./TaskComponent/TaskListMove";
+import TaskMap from "./TaskComponent/TaskMap";
 
-export default function Done({taskList}) {
+export default function Done({index, taskList, handleEdit}) {
   return (
     <>
       <section className="flex flex-col items-center justify-baseline h-screen w-150 p-10 bg-gray-500 border">
@@ -9,15 +9,7 @@ export default function Done({taskList}) {
         </section>
         <section className="taskList pt-10">
           <ul>
-            {taskList
-              .filter(item=> item.isDone)
-              .map((item, id)=>
-                <section className="pt-5 px-5 m-5 border border-green-500  rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
-                  <li>{item.text}
-                    <TaskListMove taskList={taskList}/>
-                  </li>
-                </section>
-            )}
+            <TaskMap id={index} taskList={taskList} handleEdit={handleEdit} />
           </ul>
         </section>
       </section>

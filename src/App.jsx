@@ -116,7 +116,7 @@ return (
           <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} handleDone={handleDone} />
         </section>
         <section className="py-5 px-3">
-          {add.taskPrompt && <AddTaskComponent taskRef={taskRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} alert={alert} />}
+          {add.taskPrompt && <AddTaskComponent alert={alert} taskRef={taskRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} />}
           <InProg className="pb-10" taskList={taskList} />
         </section>
         <section className="py-5 px-3">
