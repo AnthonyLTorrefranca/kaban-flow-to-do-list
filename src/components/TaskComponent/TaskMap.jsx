@@ -1,6 +1,7 @@
+import TaskListTransfer from './TaskListTransfer'
 import TaskListMove from './TaskListMove'
 
-export default function TaskMap({taskList, handleEdit}) {
+export default function TaskMap({taskList, handleEdit, handleInProg, handleDelete}) {
   return (
     <ul>
       {taskList
@@ -12,9 +13,10 @@ export default function TaskMap({taskList, handleEdit}) {
                     <li>
                         {item.text}
                     </li>
-                    <button className="rounded hover:cursor-pointer hover:bg-red-500">❌</button>
+                    <button className="rounded hover:cursor-pointer hover:bg-red-500" onClick={()=> handleDelete(item.id)}>❌</button>
                 </section>
                 <TaskListMove index={index} taskList={taskList} handleEdit={handleEdit} />
+                <TaskListTransfer index={index} taskList={taskList} handleInProg={handleInProg} handleEdit={handleEdit} />
             </section>)}
     </ul>
   )
