@@ -17,7 +17,7 @@ export default function InProg({taskList, moveToTodo, moveToProg, moveToDone, ha
                     <button className="rounded hover:cursor-pointer hover:bg-red-500" onClick={()=> handleDelete(item.id)}>❌</button>
                 </section>
                 <TaskListMove index={item.id} taskList={taskList} handleEdit={handleEdit} />
-                <TaskListTransfer id={item.id} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />
+                <TaskListTransfer id={item.id} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} handleEdit={handleEdit} />
           </section>)}
       </div>
     </section>

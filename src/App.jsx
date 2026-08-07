@@ -13,33 +13,30 @@ export default function App() {
   const taskRef = useRef(null);
 
   useEffect(()=> {
-    if (add.taskPrompt){
-      return taskRef.current.focus()
-    }
-  }, [add.taskPrompt])
-  useEffect(()=>{console.log(taskList)},[taskList])
+    if (add.taskPrompt){ return taskRef.current.focus() } }, [add.taskPrompt])
+  // useEffect(()=>{console.log(taskList)},[taskList])
 
   function moveToTodo(id){
     setAlert("idle");
-    setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
+    console.log("handleTaskList", taskList);
+    // setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
     setTaskList(prevTasks=> 
       prevTasks.map(item=> item.id === id ? {...item, status: "todo"} : item)
     )
-    console.log("handleTaskList", taskList);
   }
   function moveToProg(id){
+    console.log("moveToProg", taskList)
     setAlert("idle");
     setTaskList(prevTasks=> 
       prevTasks.map(item=> item.id === id ? {...item, status: "progress"} : item)
     )
-    console.log("moveToProg", taskList)
   }
   function moveToDone(id){
-    setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
+    console.log("moveToDone", taskList)
+    // setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
     setTaskList(prevTasks=> 
       prevTasks.map(item=> item.id === id ? {...item, status: "done"} : item)
     )
-    console.log("moveToDone")
     setAlert("idle");
   }
   function handleEdit(index){
@@ -131,11 +128,11 @@ return (
     <div>
       <section className="flex">
         <section className="py-5 px-3 ">
-          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToProg={moveToProg} moveToDone={moveToDone} />
+          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />
         </section>
         <section className="py-5 px-3">
           {add.taskPrompt && <AddTaskComponent alert={alert} taskRef={taskRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} />}
-          <InProg className="pb-10" taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToProg={moveToProg} moveToDone={moveToDone} />
+          <InProg className="pb-10" taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />
         </section>
         <section className="py-5 px-3">
           <Done alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />

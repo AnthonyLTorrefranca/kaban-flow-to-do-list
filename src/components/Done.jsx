@@ -21,7 +21,7 @@ export default function Done({taskList, moveToTodo, moveToProg, moveToDone,  han
                   <button className="rounded hover:cursor-pointer hover:bg-red-500" onClick={()=> handleDelete(item.id)}>❌</button>
               </section>
               <TaskListMove index={index} taskList={taskList} handleEdit={handleEdit} />
-              <TaskListTransfer index={index} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} handleEdit={handleEdit} />
+              <TaskListTransfer id={item.id} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} handleEdit={handleEdit} />
           </section>)}
         </section>
       </section>
