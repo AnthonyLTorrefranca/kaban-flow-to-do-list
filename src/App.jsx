@@ -17,7 +17,7 @@ export default function App() {
       return taskRef.current.focus()
     }
   }, [add.taskPrompt])
-  // useEffect(()=> {console.log(taskList, "UEtaskList",  Boolean(taskList.isDone))},[taskList, taskList.isDone])
+  useEffect(()=>{console.log(taskList)},[taskList])
 
   function moveToTodo(id){
     setAlert("idle");
