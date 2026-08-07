@@ -12,14 +12,12 @@ export default function App() {
   const [alert, setAlert] = useState("idle");
   const taskRef = useRef(null);
 
-  useEffect(()=> {
-    if (add.taskPrompt){ return taskRef.current.focus() } }, [add.taskPrompt])
-  // useEffect(()=>{console.log(taskList)},[taskList])
+  useEffect(()=> { if (add.taskPrompt){ return taskRef.current.focus() } }, [add.taskPrompt])
 
   function moveToTodo(id){
     setAlert("idle");
     console.log("handleTaskList", taskList);
-    // setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
+    setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
     setTaskList(prevTasks=> 
       prevTasks.map(item=> item.id === id ? {...item, status: "todo"} : item)
     )
@@ -33,7 +31,7 @@ export default function App() {
   }
   function moveToDone(id){
     console.log("moveToDone", taskList)
-    // setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
+    setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
     setTaskList(prevTasks=> 
       prevTasks.map(item=> item.id === id ? {...item, status: "done"} : item)
     )
@@ -132,7 +130,7 @@ return (
         </section>
         <section className="py-5 px-3">
           {add.taskPrompt && <AddTaskComponent alert={alert} taskRef={taskRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} />}
-          <InProg className="pb-10" taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />
+          {!add.taskPrompt && <InProg className="pb-10" taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />}
         </section>
         <section className="py-5 px-3">
           <Done alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />

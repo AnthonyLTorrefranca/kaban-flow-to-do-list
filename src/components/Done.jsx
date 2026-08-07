@@ -5,12 +5,11 @@ import TaskListMove from './TaskComponent/TaskListMove'
 export default function Done({taskList, moveToTodo, moveToProg, moveToDone,  handleDelete, handleEdit,}) {
   return (
     <>
-      <section className="flex flex-col items-center justify-baseline h-screen w-150 p-10 bg-gray-500 border">
+      <section className="flex flex-col items-center justify-baseline overflow-hidden w-150 p-10 bg-gray-500 border">
         <section className="flex items-center justify-center">
           <p className="font text-2xl">Done</p>
         </section>
         <section className="taskList pt-10">
-          {/* <TaskMap id={index} taskList={taskList} handleEdit={handleEdit} handleDelete={handleDelete}/> */}
           {taskList
             .filter(task=> task.status === "done")
             .map((item, index)=>
