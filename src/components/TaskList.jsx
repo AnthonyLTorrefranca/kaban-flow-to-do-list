@@ -5,7 +5,7 @@ import TaskListTransfer from './TaskComponent/TaskListTransfer.jsx'
 export default function TaskList({alert, taskList, moveToTodo, moveToProg, moveToDone, handleDelete, handleMoveUp, handleMoveDown, handleEdit}) {
   return (
     <>
-      <section className="flex flex-col items-center justify-baseline min-h-screen  overflow-hidden w-150 p-10 bg-gray-500 border">
+      <section className="flex flex-col items-center justify-baseline min-h-screen overflow-hidden m-w-screen p-10 bg-gray-500 border">
         <section className="header">
           <AlertComponent alert={alert} />
           {taskList

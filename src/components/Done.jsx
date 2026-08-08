@@ -5,8 +5,8 @@ import TaskListMove from './TaskComponent/TaskListMove'
 export default function Done({taskList, moveToTodo, moveToProg, moveToDone,  handleDelete, handleEdit,}) {
   return (
     <>
-      <section className="flex flex-col items-center justify-baseline min-h-screen 
-        overflow-hidden w-150 p-10 bg-gray-500 border">
+      <section className="flex flex-col items-center justify-baseline min-h-screen m-w-screen 
+        overflow-hidden p-10 bg-gray-500 border">
         <section className="flex items-center justify-center">
           <p className="font text-2xl">Done</p>
         </section>

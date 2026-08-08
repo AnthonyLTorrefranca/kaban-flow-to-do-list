@@ -5,7 +5,7 @@ import TaskListTransfer from './TaskComponent/TaskListTransfer'
 export default function InProg({taskList, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit}) {
   return (
     <section className="flex flex-col items-center justify-baseline 
-      min-h-screen overflow-hidden w-150 p-10 bg-gray-500  border">
+      min-h-screen overflow-hidden m-w-screen p-10 bg-gray-500  border">
       <p className="font text-2xl">In Progress</p>
       <div className="m-10">
         {taskList
