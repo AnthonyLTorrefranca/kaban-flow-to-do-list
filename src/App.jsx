@@ -123,19 +123,30 @@ export default function App() {
     setTaskName("")
   }
 return (
-  <section className="flex flex-col px-5 bg-slate-900 text-white overflow-hidden">
+  <section className="bg-slate-900 text-white overflow-hidden">
     <section className="flex items-center justify-center">
       <h1 className="text-3xl p-5 font-bold text-sky-400">Kanban Flow 🚀</h1>
       <button className="bg-gray-950 p-1 cursor-pointer border-2 rounded-xl" onClick={addBtn}>+ New Task</button>
     </section>
     <div>
-      <section className="flex">
+      <section className="grid grid-cols-1 px-5 md:grid-cols-3">
         <section className="py-5 px-3 ">
           <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToProg={moveToProg} moveToDone={moveToDone} />
         </section>
         <section className="py-5 px-3">
-          {add.taskPrompt && <AddTaskComponent alert={alert} taskRef={taskRef} taskName={taskName} handleChange={handleChange} handleSubmit={handleSubmit} handleCancel={handleCancel} />}
-          <InProg className="pb-10" taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToProg={moveToProg} moveToDone={moveToDone} />
+          {add.taskPrompt && 
+          <AddTaskComponent alert={alert} 
+            taskRef={taskRef} taskName={taskName} 
+            handleChange={handleChange} handleSubmit={handleSubmit} 
+            handleCancel={handleCancel} />}
+          <InProg className="pb-10" 
+            taskList={taskList} 
+            handleMoveUp={handleMoveUp} 
+            handleMoveDown={handleMoveDown} 
+            handleEdit={handleEdit} 
+            handleDelete={handleDelete} 
+            moveToProg={moveToProg} 
+            moveToDone={moveToDone} />
         </section>
         <section className="py-5 px-3">
           <Done alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />

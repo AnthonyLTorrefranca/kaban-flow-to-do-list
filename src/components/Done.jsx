@@ -1,30 +1,33 @@
-// import TaskMap from "./TaskComponent/TaskMap";
-import TaskListTransfer from './TaskComponent/TaskListTransfer'
+// import TaskMap from './TaskComponent/TaskMap'
 import TaskListMove from './TaskComponent/TaskListMove'
+import TaskListTransfer from './TaskComponent/TaskListTransfer'
 
-export default function Done({taskList, moveToTodo, moveToProg, moveToDone,  handleDelete, handleEdit,}) {
+export default function InProg({taskList, handleMoveUp, handleMoveDown, handleEdit, moveToTodo, moveToProg, moveToDone, handleDelete,}) {
   return (
-    <>
-      <section className="flex flex-col items-center justify-baseline h-screen w-150 p-10 bg-gray-500 border">
-        <section className="flex items-center justify-center">
-          <p className="font text-2xl">Done</p>
-        </section>
-        <section className="taskList pt-10">
-          {/* <TaskMap id={index} taskList={taskList} handleEdit={handleEdit} handleDelete={handleDelete}/> */}
-          {taskList
-            .filter(task=> task.status === "done")
-            .map((item, index)=>
-              <section className="pt-5 px-5 m-5 border border-green-500  rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
+    <section className="flex flex-col items-center justify-baseline h-screen m-w-screen p-10 bg-gray-500  border">
+      <p className="font text-2xl">In Progress</p>
+      <div className="m-10">
+        {/* <TaskMap taskList={taskList} handleDelete={handleDelete} /> */}
+        {taskList
+          .filter(task=> task.status === "done")
+          .map((item)=>
+            <section className="pt-5 px-5 m-5 border border-green-500  rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
               <section className="flex justify-around">
-                  <input type="checkbox"/>
-                  <span>{item.text}</span>
-                  <button className="rounded hover:cursor-pointer hover:bg-red-500" onClick={()=> handleDelete(item.id)}>❌</button>
+                <span>{item.text}</span>
+                <button className="rounded hover:cursor-pointer hover:bg-red-500" onClick={()=> handleDelete(item.id)}>❌</button>
               </section>
-              <TaskListMove index={index} taskList={taskList} handleEdit={handleEdit} />
-              <TaskListTransfer index={index} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} handleEdit={handleEdit} />
+              <section className="actionBtn">
+                <TaskListMove 
+                  handleMoveUp={handleMoveUp} 
+                  handleMoveDown={handleMoveDown} 
+                  handleEdit={handleEdit} />
+                <TaskListTransfer id={item.id} 
+                  moveToTodo={moveToTodo} 
+                  moveToProg={moveToProg} 
+                  moveToDone={moveToDone} />
+              </section>
           </section>)}
-        </section>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }
