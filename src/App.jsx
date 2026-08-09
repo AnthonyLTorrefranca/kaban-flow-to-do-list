@@ -67,22 +67,22 @@ export default function App() {
   function handleMoveUp(index){
   const updatedTask = [...taskList];
   setAlert("idle");
+  console.log("top", index, updatedTask.length)
   if (index+updatedTask.length === updatedTask.length) return setAlert("top");
   if (index < updatedTask.length){
     [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
     setTaskList(updatedTask)
   }
-  console.log("top", index, updatedTask.length)
   }
   function handleMoveDown(index){
   setAlert("idle");
   const updatedTask = [...taskList];
-  if (index+2 === updatedTask.length) return setAlert("down");
+  if (index+1 === updatedTask.length) return setAlert("down");
   if (index < updatedTask.length){ 
     [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]]
     setTaskList(updatedTask)
-    }
-    console.log("movedown", index+3, updatedTask.length)
+  }
+  console.log("movedown", index+1, updatedTask.length)
   }
   function handleSubmit(e){
   e.preventDefault();
@@ -132,7 +132,7 @@ return (
           <AddTaskComponent 
             alert={alert} 
             taskRef={taskRef} 
-            taskName={taskName} 
+            taskName={taskName}
             handleChange={handleChange} 
             handleSubmit={handleSubmit} 
             handleCancel={handleCancel} />}

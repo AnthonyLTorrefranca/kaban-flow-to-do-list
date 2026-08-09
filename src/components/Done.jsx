@@ -2,7 +2,7 @@
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
 import TaskListMove from './TaskComponent/TaskListMove'
 
-export default function Done({taskList, moveToTodo, moveToProg, moveToDone,  handleDelete, handleEdit,}) {
+export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit,}) {
   return (
     <>
       <section className="flex flex-col items-center justify-baseline min-h-screen m-w-screen 
@@ -22,8 +22,13 @@ export default function Done({taskList, moveToTodo, moveToProg, moveToDone,  han
                   <button className="rounded hover:cursor-pointer hover:bg-red-500" 
                     onClick={()=> handleDelete(item.id)}>❌</button>
               </section>
-              <TaskListMove index={index} taskList={taskList} handleEdit={handleEdit} />
-              <TaskListTransfer id={item.id} 
+              <TaskListMove index={index}
+                taskList={taskList}
+                handleMoveUp={handleMoveUp}
+                handleMoveDown={handleMoveDown}
+                handleEdit={handleEdit} />
+              <TaskListTransfer id={item.id}
+                handleMoveDown={handleMoveDown}
                 moveToTodo={moveToTodo} 
                 moveToProg={moveToProg} 
                 moveToDone={moveToDone} 
