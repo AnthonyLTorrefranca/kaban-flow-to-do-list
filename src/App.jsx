@@ -149,7 +149,14 @@ return (
             moveToDone={moveToDone} />
         </section>
         <section className="py-5 px-3">
-          <Done alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToTodo={moveToTodo} moveToProg={moveToProg} moveToDone={moveToDone} />
+          <Done alert={alert} taskList={taskList}
+            handleMoveUp={handleMoveUp}
+            handleMoveDown={handleMoveDown}
+            handleEdit={handleEdit}
+            handleDelete={handleDelete} 
+            moveToTodo={moveToTodo}
+            moveToProg={moveToProg}
+            moveToDone={moveToDone} />
         </section>
       </section>
     </div>

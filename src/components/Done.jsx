@@ -21,8 +21,8 @@ export default function InProg({taskList, handleMoveUp, handleMoveDown, handleEd
                   handleMoveUp={handleMoveUp} 
                   handleMoveDown={handleMoveDown} 
                   handleEdit={handleEdit} />
-                <TaskListTransfer id={item.id} 
-                  moveToTodo={moveToTodo} 
+                <TaskListTransfer id={item.id}
+                  moveToTodo={moveToTodo}
                   moveToProg={moveToProg} 
                   moveToDone={moveToDone} />
               </section>

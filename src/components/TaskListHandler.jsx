@@ -19,7 +19,7 @@ export default function TaskListHandler({taskList, moveToTodo, moveToProg, moveT
               handleMoveDown={handleMoveDown}
               handleEdit={handleEdit} />
             <TaskListTransfer id={item.id} 
-              moveToTodo={moveToTodo} 
+              moveToTodo={moveToTodo}
               moveToProg={moveToProg} 
               moveToDone={moveToDone} />
           </section>
@@ -40,7 +40,7 @@ export default function TaskListHandler({taskList, moveToTodo, moveToProg, moveT
               handleMoveDown={handleMoveDown} 
               handleEdit={handleEdit} />
             <TaskListTransfer id={item.id} 
-              moveToTodo={moveToTodo} 
+              moveToTodo={moveToTodo}
               moveToProg={moveToProg} 
               moveToDone={moveToDone} />
           </section>
@@ -61,7 +61,7 @@ export default function TaskListHandler({taskList, moveToTodo, moveToProg, moveT
               handleMoveDown={handleMoveDown} 
               handleEdit={handleEdit} />
             <TaskListTransfer id={item.id} 
-              moveToTodo={moveToTodo} 
+              moveToTodo={moveToTodo}
               moveToProg={moveToProg} 
               moveToDone={moveToDone} />
           </section>
