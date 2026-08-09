@@ -123,43 +123,60 @@ export default function App() {
     setTaskName("")
   }
 return (
-  <section className="bg-slate-900 text-white overflow-hidden">
-    <section className="flex items-center justify-center">
-      <h1 className="text-3xl p-5 font-bold text-sky-400">Kanban Flow 🚀</h1>
-      <button className="bg-gray-950 p-1 cursor-pointer border-2 rounded-xl" onClick={addBtn}>+ New Task</button>
-    </section>
+  <div className="bg-slate-900 text-white">
+    <header className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 bg-slate-900/90 backdrop-blur-md shadow-md border-b border-slate-800">
+      <h1 className="text-3xl font-bold text-sky-400">Kanban Flow 🚀</h1>
+      <button 
+        className="bg-gray-950 px-4 py-2 cursor-pointer border border-slate-700 hover:border-sky-400 rounded-xl transition" 
+        onClick={addBtn}
+      >
+        + New Task
+      </button>
+    </header>
     <div>
-      <section className="grid grid-cols-1 px-5 md:grid-cols-3">
-        <section className="py-5 px-3 ">
-          <TaskList alert={alert} taskList={taskList} handleMoveUp={handleMoveUp} handleMoveDown={handleMoveDown} handleEdit={handleEdit} handleDelete={handleDelete} moveToProg={moveToProg} moveToDone={moveToDone} />
-        </section>
-        <section className="py-5 px-3">
+      <main className="grid grid-cols-1 px-5 md:grid-cols-3">
+        <div className="py-5 px-3 ">
+          <TaskList alert={alert} 
+            taskList={taskList} 
+            handleMoveUp={handleMoveUp} 
+            handleMoveDown={handleMoveDown} 
+            handleEdit={handleEdit} 
+            handleDelete={handleDelete} 
+            moveToTodo={moveToTodo} 
+            moveToProg={moveToProg} 
+            moveToDone={moveToDone} />
+        </div>
+        <div className="py-5 px-3">
           {add.taskPrompt && 
           <AddTaskComponent alert={alert} 
             taskRef={taskRef} taskName={taskName} 
-            handleChange={handleChange} handleSubmit={handleSubmit} 
+            handleChange={handleChange}
+            handleSubmit={handleSubmit} 
             handleCancel={handleCancel} />}
+          {!add.taskPrompt && 
           <InProg className="pb-10" 
             taskList={taskList} 
             handleMoveUp={handleMoveUp} 
             handleMoveDown={handleMoveDown} 
             handleEdit={handleEdit} 
             handleDelete={handleDelete} 
+            moveToTodo={moveToTodo} 
+            moveToProg={moveToProg} 
+            moveToDone={moveToDone} /> }
+        </div>
+        <div className="py-5 px-3">
+          <Done alert={alert}
+            taskList={taskList} 
+            handleMoveUp={handleMoveUp} 
+            handleMoveDown={handleMoveDown} 
+            handleEdit={handleEdit} 
+            handleDelete={handleDelete} 
+            moveToTodo={moveToTodo} 
             moveToProg={moveToProg} 
             moveToDone={moveToDone} />
-        </section>
-        <section className="py-5 px-3">
-          <Done alert={alert} taskList={taskList}
-            handleMoveUp={handleMoveUp}
-            handleMoveDown={handleMoveDown}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete} 
-            moveToTodo={moveToTodo}
-            moveToProg={moveToProg}
-            moveToDone={moveToDone} />
-        </section>
-      </section>
+        </div>
+      </main>
     </div>
-  </section>
+  </div>
   )
 }

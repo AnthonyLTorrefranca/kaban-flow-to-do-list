@@ -5,11 +5,9 @@ import TaskListTransfer from './TaskComponent/TaskListTransfer'
 export default function InProg({taskList, handleMoveUp, handleMoveDown, handleEdit, moveToTodo, moveToProg, moveToDone, handleDelete,}) {
   return (
     <section className="flex flex-col items-center justify-baseline h-screen m-w-screen p-10 bg-gray-500  border">
-      <p className="font text-2xl">In Progress</p>
+      <p className="font text-2xl">Done</p>
       <div className="m-10">
-        {/* <TaskMap taskList={taskList} handleDelete={handleDelete} /> */}
-        {taskList
-          .filter(task=> task.status === "done")
+        {taskList.filter(task=> task.status === "done")
           .map((item)=>
             <section className="pt-5 px-5 m-5 border border-green-500  rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
               <section className="flex justify-around">
