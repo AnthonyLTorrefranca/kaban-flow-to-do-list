@@ -18,7 +18,7 @@ export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo
                 bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="header flex justify-around">
                     <input type="checkbox" checked/>
-                    <span className='line-through'>{item.text}</span>
+                    <span className="line-through decoration-black decoration-2 decoration-wavy">{item.text}</span>
                     <button className="rounded hover:cursor-pointer hover:bg-red-500" 
                       onClick={()=> handleDelete(item.id)}>❌</button>
                 </section>
