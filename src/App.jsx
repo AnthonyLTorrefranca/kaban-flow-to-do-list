@@ -8,10 +8,16 @@ export default function App() {
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false});
   const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
-  const [taskList, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useState(()=>{
+    const saved = localStorage.getItem("taskList");
+    return saved ? JSON.parse(saved) : []})
   const [alert, setAlert] = useState("idle");
   const taskRef = useRef(null);
 
+  useEffect(()=>{
+    localStorage.setItem("taskList", JSON.stringify(taskList))
+  },[taskList])
+  
   useEffect(()=> { if (add.taskPrompt){ return taskRef.current.focus() } }, [add.taskPrompt])
 
   function moveToTodo(id){

@@ -2,7 +2,7 @@
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
 import TaskListMove from './TaskComponent/TaskListMove'
 
-export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit,}) {
+export default function Done({checked, taskList, handleMoveUp, handleMoveDown, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit,}) {
   return (
     <>
       <section className="flex flex-col items-center justify-baseline min-h-screen m-w-screen 
@@ -17,8 +17,8 @@ export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo
               <section className="pt-5 px-5 m-5 border-2 border-green-500  rounded-2xl 
                 bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="header flex justify-around">
-                    <input type="checkbox" checked/>
-                    <span className="line-through decoration-black decoration-2 decoration-wavy">{item.text}</span>
+                    <input type="checkbox" value={checked} checked/>
+                    <span className="line-through decoration-red-500 decoration-2 decoration-wavy">{item.text}</span>
                     <button className="rounded hover:cursor-pointer hover:bg-red-500" 
                       onClick={()=> handleDelete(item.id)}>❌</button>
                 </section>
