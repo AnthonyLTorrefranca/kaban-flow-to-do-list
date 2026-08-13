@@ -8,7 +8,7 @@ export default function InProg({taskList, handleMoveUp, handleMoveDown, moveToTo
       <p className="font text-2xl">In Progress</p>
       <div className="m-10">
         {taskList.filter(task=> task.status === "progress").map((item)=>
-          <section className="rounded-2xl bg-slate-800 border-2 border-amber-500 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
+          <section className="pt-5 px-5 m-5 rounded-2xl bg-slate-800 border-2 border-amber-500 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="flex justify-around">
                     <span className='underline'>{item.text}</span>
                     <button className="rounded hover:cursor-pointer 
