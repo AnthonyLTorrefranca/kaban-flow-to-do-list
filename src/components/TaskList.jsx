@@ -11,7 +11,7 @@ export default function TaskList({alert, taskList, moveToTodo, moveToProg, moveT
           {taskList
             .filter(task=> task.status === "todo")
             .map((item, index)=>
-              <section className="pt-5 px-5 m-5 border 
+              <section className="pt-5 px-5 m-5 border-2
               border-red-500 rounded-2xl bg-slate-800 
               text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="flex justify-around">

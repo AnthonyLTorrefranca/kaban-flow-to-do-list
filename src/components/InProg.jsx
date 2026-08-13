@@ -1,4 +1,3 @@
-// import TaskMap from './TaskComponent/TaskMap'
 import AlertComponent from './TaskComponent/Alert'
 import TaskListMove from './TaskComponent/TaskListMove'
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
@@ -8,14 +7,12 @@ export default function InProg({alert, taskList, handleMoveUp, handleMoveDown, m
     <section className="flex flex-col items-center justify-baseline 
       min-h-screen overflow-hidden m-w-screen p-10 bg-gray-500  border">
       <AlertComponent alert={alert} taskList={taskList} />
-      {/* <p className="font text-2xl">In Progress</p> */}
       <div className="m-10">
-        {taskList
-          .filter(task=> task.status === "progress")
-          .map((item)=>
-sugbu                rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
+        {taskList.filter(task=> task.status === "progress").map((item)=>
+          <section className="rounded-2xl bg-slate-800 border-2 border-amber-500 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="flex justify-around">
-                    <span>{item.text}</span>
+                    <input type="checkbox"/>
+                    <span className='underline'>{item.text}</span>
                     <button className="rounded hover:cursor-pointer 
                       hover:bg-red-500" onClick={()=> handleDelete(item.id)}>❌</button>
                 </section>
