@@ -15,7 +15,6 @@ export default function TaskList({alert, taskList, moveToTodo, moveToProg, moveT
               border-red-500 rounded-2xl bg-slate-800 
               text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="flex justify-around">
-                  <input type="checkbox"/>
                   <span>{item.text}</span>
                   <button className="rounded hover:cursor-pointer hover:bg-red-500" 
                   onClick={()=> handleDelete(item.id)}>❌</button>

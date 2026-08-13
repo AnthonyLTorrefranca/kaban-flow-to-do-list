@@ -1,4 +1,3 @@
-import AlertComponent from './TaskComponent/Alert'
 import TaskListMove from './TaskComponent/TaskListMove'
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
 
@@ -11,7 +10,6 @@ export default function InProg({taskList, handleMoveUp, handleMoveDown, moveToTo
         {taskList.filter(task=> task.status === "progress").map((item)=>
           <section className="rounded-2xl bg-slate-800 border-2 border-amber-500 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="flex justify-around">
-                    <input type="checkbox"/>
                     <span className='underline'>{item.text}</span>
                     <button className="rounded hover:cursor-pointer 
                       hover:bg-red-500" onClick={()=> handleDelete(item.id)}>❌</button>
@@ -21,8 +19,11 @@ export default function InProg({taskList, handleMoveUp, handleMoveDown, moveToTo
                   handleMoveDown={handleMoveDown}
                   taskList={taskList}
                   handleEdit={handleEdit} />
-                <TaskListTransfer id={item.id} moveToTodo={moveToTodo}
-                  moveToProg={moveToProg} moveToDone={moveToDone} handleEdit={handleEdit} />
+                <TaskListTransfer id={item.id}
+                  moveToTodo={moveToTodo}
+                  moveToProg={moveToProg}
+                  moveToDone={moveToDone}
+                  handleEdit={handleEdit} />
           </section>)}
       </div>
     </section>

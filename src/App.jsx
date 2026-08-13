@@ -8,27 +8,34 @@ export default function App() {
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false});
   const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
-  const [taskList, setTaskList] = useState(()=>{
+  const [taskList, setTaskList] = useState(()=> {
     const saved = localStorage.getItem("taskList");
-    return saved ? JSON.parse(saved) : []})
+    return saved ? JSON.parse(saved) : [];
+  })
+  // const [taskList, setTaskList] = useState(()=>{
+  //   const saved = localStorage.getItem("taskList");
+  //   return saved ? JSON.parse(saved) : []})
   const [alert, setAlert] = useState("idle");
   const taskRef = useRef(null);
 
-  useEffect(()=>{
-    localStorage.setItem("taskList", JSON.stringify(taskList))
-  },[taskList])
+    useEffect(()=> {
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+  }, [taskList])
+
+
+  // useEffect(()=>{
+  //   localStorage.setItem("taskList", JSON.stringify(taskList))
+  // },[taskList])
   
   useEffect(()=> { if (add.taskPrompt){ return taskRef.current.focus() } }, [add.taskPrompt])
 
   function moveToTodo(id){
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "todo"}: item))
     setAlert("idle");
-    console.log(taskList)
   }
   function moveToProg(id){
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "progress"}: item))
     setAlert("idle");
-    console.log(taskList)
   }
   function moveToDone(id){
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "done"}: item))
@@ -115,6 +122,7 @@ export default function App() {
   setAlert("idle")
   setTaskName("")
   }
+  useEffect(()=>{console.log(taskList)}, [taskList])
 return (
   <section className="min-h-screen px-5 bg-slate-900 text-white overflow-hidden">
     <header className="flex items-center justify-center">
@@ -124,7 +132,7 @@ return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
       <section>
         <TaskList alert={alert} 
-          taskList={taskList} 
+          taskList={taskList}
           handleMoveUp={handleMoveUp} 
           handleMoveDown={handleMoveDown} 
           handleEdit={handleEdit} 
@@ -144,7 +152,7 @@ return (
             handleCancel={handleCancel} />}
         {!add.taskPrompt && 
           <InProg className="pb-10" 
-            taskList={taskList} 
+            taskList={taskList}
             handleMoveUp={handleMoveUp}
             handleMoveDown={handleMoveDown} 
             handleEdit={handleEdit} 
@@ -154,7 +162,7 @@ return (
             moveToDone={moveToDone} />}
       </section>
       <section>
-        <Done alert={alert} 
+        <Done alert={alert}
           taskList={taskList}
           handleMoveUp={handleMoveUp}
           handleMoveDown={handleMoveDown} 
