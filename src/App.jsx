@@ -46,7 +46,7 @@ export default function App() {
   return setTaskName(e.target.value)
   }
   function addBtn(){
-    setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: false}))
+    setAdd((prev)=> ({...prev, taskPrompt: !prev.taskPrompt, isEdit: !prev.isEdit}))
     setEditingId(null)
     setAlert("idle");
     setTaskName("");
@@ -114,7 +114,6 @@ export default function App() {
     setAlert("idle")
     setTaskName("")
   }
-  // useEffect(()=>{console.log(taskList)}, [taskList])
 return (
   <section className="min-h-screen px-5 bg-slate-900 text-white overflow-hidden">
     <header className="flex items-center justify-center">
