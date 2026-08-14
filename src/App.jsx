@@ -10,14 +10,15 @@ export default function App() {
   const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
   const [alert, setAlert] = useState("idle");
+
   const [taskList, setTaskList] = useState(()=>{
     const task = localStorage.getItem("taskList");
-    return task ? JSON.parse(task) : []; 
+    return task ? JSON.parse(task) : []
   })
   useEffect(()=>{
     localStorage.setItem("taskList", JSON.stringify(taskList))
   }, [taskList])
-  useEffect(()=> { if (add.taskPrompt){return taskRef.current.focus()}}, [add.taskPrompt])
+  useEffect(()=> { if (add.taskPrompt){return taskRef.current.focus()}}, [add.taskPrompt, add.isEdit])
   function moveToTodo(id){
     setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "todo"}: item))
@@ -46,7 +47,7 @@ export default function App() {
   return setTaskName(e.target.value)
   }
   function addBtn(){
-    setAdd((prev)=> ({...prev, taskPrompt: !prev.taskPrompt, isEdit: !prev.isEdit}))
+    setAdd(prev=> ({...prev, taskPrompt: true, isEdit: false}))
     setEditingId(null)
     setAlert("idle");
     setTaskName("");
@@ -114,6 +115,7 @@ export default function App() {
     setAlert("idle")
     setTaskName("")
   }
+  useEffect(()=>{console.log(editingId, add)}, [editingId, add])
 return (
   <section className="min-h-screen px-5 bg-slate-900 text-white overflow-hidden">
     <header className="flex items-center justify-center">
