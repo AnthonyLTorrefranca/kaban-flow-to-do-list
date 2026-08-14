@@ -13,7 +13,7 @@ export default function Done({id, taskList, handleMoveUp, handleMoveDown, moveTo
         <section className="taskList pt-10">
           {taskList
             .filter(task=> task.status === "done")
-            .map((item, index)=>
+            .map(item=>
               <section className="pt-5 px-5 m-5 border-2 border-green-500  rounded-2xl 
                 bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
                 <section className="header flex justify-around">
@@ -21,7 +21,7 @@ export default function Done({id, taskList, handleMoveUp, handleMoveDown, moveTo
                     <button className="rounded hover:cursor-pointer hover:bg-red-500" 
                       onClick={()=> handleDelete(item.id)}>❌</button>
                 </section>
-                <TaskListMove index={index}
+                <TaskListMove id={item.id}
                   taskList={taskList}
                   handleMoveUp={handleMoveUp}
                   handleMoveDown={handleMoveDown}

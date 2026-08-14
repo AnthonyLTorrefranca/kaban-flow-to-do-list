@@ -5,39 +5,42 @@ import Done from "./components/Done.jsx";
 import AddTaskComponent from './components/TaskComponent/AddTaskComponent.jsx'
 
 export default function App() {
+  const taskRef = useRef(null);
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false});
   const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
   const [alert, setAlert] = useState("idle");
-  const taskRef = useRef(null);
 
   const [taskList, setTaskList] = useState(()=>{
-    const saved = localStorage.getItem("taskList");
-    return saved ? JSON.parse(saved) : [];
+    const task = localStorage.getItem("taskList");
+    return task ? JSON.parse(task) : [];
   })
-  useEffect(()=>{ localStorage.setItem("taskList", JSON.stringify(taskList))}, [taskList])
-
+  useEffect(()=>{
+    localStorage.setItem("taskList", JSON.stringify(taskList))
+  }, [taskList])
   useEffect(()=> { if (add.taskPrompt){return taskRef.current.focus()}}, [add.taskPrompt])
-
   function moveToTodo(id){
+    setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "todo"}: item))
     setAlert("idle");
   }
   function moveToProg(id){
+    setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "progress"}: item))
     setAlert("idle");
   }
   function moveToDone(id){
+    setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "done"}: item))
     setAlert("idle");
     console.log(taskList)
   }
-  function handleEdit(index){
+  function handleEdit(id){
     setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
-    const selectedTask = taskList[index];
+    const selectedTask = taskList.find(item=> item.id === id);
     setEditingId(selectedTask.id)
     setTaskName(selectedTask.text)
-    console.log("edit")
+    console.log("edit", selectedTask)
     return 
   }
   function handleChange(e){
@@ -121,7 +124,7 @@ return (
     </header>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
       <section>
-        <TaskList alert={alert} 
+        <TaskList alert={alert}
           taskList={taskList}
           handleMoveUp={handleMoveUp} 
           handleMoveDown={handleMoveDown} 

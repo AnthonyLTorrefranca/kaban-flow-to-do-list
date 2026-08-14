@@ -10,7 +10,7 @@ export default function TaskList({alert, taskList, moveToTodo, moveToProg, moveT
           <AlertComponent alert={alert} />
           {taskList
             .filter(task=> task.status === "todo")
-            .map((item, index)=>
+            .map(item=>
               <section className="pt-5 px-5 m-5 border-2
               border-red-500 rounded-2xl bg-slate-800 
               text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
@@ -19,7 +19,7 @@ export default function TaskList({alert, taskList, moveToTodo, moveToProg, moveT
                   <button className="rounded hover:cursor-pointer hover:bg-red-500" 
                   onClick={()=> handleDelete(item.id)}>❌</button>
                 </section>
-                  <TaskListMove index={index} 
+                  <TaskListMove id={item.id}
                     taskList={taskList}
                     handleMoveUp={handleMoveUp}
                     handleMoveDown={handleMoveDown}
