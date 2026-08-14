@@ -15,11 +15,9 @@ export default function App() {
     const saved = localStorage.getItem("taskList");
     return saved ? JSON.parse(saved) : [];
   })
-  useEffect(()=>{
-    localStorage.setItem("taskList", JSON.stringify(taskList))
-  })
-  
-  useEffect(()=> { if (add.taskPrompt){ return taskRef.current.focus() } }, [add.taskPrompt])
+  useEffect(()=>{ localStorage.setItem("taskList", JSON.stringify(taskList))}, [taskList])
+
+  useEffect(()=> { if (add.taskPrompt){return taskRef.current.focus()}}, [add.taskPrompt])
 
   function moveToTodo(id){
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "todo"}: item))

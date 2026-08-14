@@ -28,10 +28,9 @@ export default function Done({id, taskList, handleMoveUp, handleMoveDown, moveTo
                   handleEdit={handleEdit} />
                 <TaskListTransfer id={item.id}
                   handleMoveDown={handleMoveDown}
-                  moveToTodo={moveToTodo} 
-                  moveToProg={moveToProg} 
-                  moveToDone={moveToDone} 
-                  handleEdit={handleEdit} />
+                  moveToTodo={moveToTodo}
+                  moveToProg={moveToProg}
+                  moveToDone={moveToDone}/>
           </section>)}
         </section>
       </section>

@@ -27,8 +27,7 @@ export default function TaskList({alert, taskList, moveToTodo, moveToProg, moveT
                   <TaskListTransfer id={item.id}
                     moveToTodo={moveToTodo} 
                     moveToProg={moveToProg} 
-                    moveToDone={moveToDone} 
-                    handleEdit={handleEdit} />
+                    moveToDone={moveToDone} />
               </section>)}
         </section>
       </section>

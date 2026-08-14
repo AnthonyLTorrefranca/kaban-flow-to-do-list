@@ -20,10 +20,9 @@ export default function InProg({taskList, handleMoveUp, handleMoveDown, moveToTo
                   taskList={taskList}
                   handleEdit={handleEdit} />
                 <TaskListTransfer id={item.id}
-                  moveToTodo={moveToTodo}
-                  moveToProg={moveToProg}
-                  moveToDone={moveToDone}
-                  handleEdit={handleEdit} />
+                moveToTodo={moveToTodo}
+                moveToProg={moveToProg}
+                moveToDone={moveToDone} />                
           </section>)}
       </div>
     </section>
