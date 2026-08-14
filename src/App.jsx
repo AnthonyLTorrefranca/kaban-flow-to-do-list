@@ -10,10 +10,9 @@ export default function App() {
   const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
   const [alert, setAlert] = useState("idle");
-
   const [taskList, setTaskList] = useState(()=>{
     const task = localStorage.getItem("taskList");
-    return task ? JSON.parse(task) : [];
+    return task ? JSON.parse(task) : []; 
   })
   useEffect(()=>{
     localStorage.setItem("taskList", JSON.stringify(taskList))

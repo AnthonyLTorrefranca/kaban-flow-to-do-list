@@ -2,7 +2,7 @@
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
 import TaskListMove from './TaskComponent/TaskListMove'
 
-export default function Done({id, taskList, handleMoveUp, handleMoveDown, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit,}) {
+export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit,}) {
   return (
     <>
       <section className="flex flex-col items-center justify-baseline min-h-screen m-w-screen 
