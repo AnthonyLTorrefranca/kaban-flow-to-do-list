@@ -8,24 +8,16 @@ export default function App() {
   const [add, setAdd] = useState({taskPrompt: false, isEdit: false});
   const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
-  const [taskList, setTaskList] = useState(()=> {
-    const saved = localStorage.getItem("taskList");
-    return saved ? JSON.parse(saved) : [];
-  })
-  // const [taskList, setTaskList] = useState(()=>{
-  //   const saved = localStorage.getItem("taskList");
-  //   return saved ? JSON.parse(saved) : []})
   const [alert, setAlert] = useState("idle");
   const taskRef = useRef(null);
 
-    useEffect(()=> {
-    localStorage.setItem("taskList", JSON.stringify(taskList));
-  }, [taskList])
-
-
-  // useEffect(()=>{
-  //   localStorage.setItem("taskList", JSON.stringify(taskList))
-  // },[taskList])
+  const [taskList, setTaskList] = useState(()=>{
+    const saved = localStorage.getItem("taskList");
+    return saved ? JSON.parse(saved) : [];
+  })
+  useEffect(()=>{
+    localStorage.setItem("taskList", JSON.stringify(taskList))
+  })
   
   useEffect(()=> { if (add.taskPrompt){ return taskRef.current.focus() } }, [add.taskPrompt])
 
@@ -43,86 +35,86 @@ export default function App() {
     console.log(taskList)
   }
   function handleEdit(index){
-  setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
-  const selectedTask = taskList[index];
-  setEditingId(selectedTask.id)
-  setTaskName(selectedTask.text)
-  console.log("edit")
-  return 
+    setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
+    const selectedTask = taskList[index];
+    setEditingId(selectedTask.id)
+    setTaskName(selectedTask.text)
+    console.log("edit")
+    return 
   }
   function handleChange(e){
   return setTaskName(e.target.value)
   }
   function addBtn(){
-  setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: false}))
-  setEditingId(null)
-  setAlert("idle");
-  setTaskName("");
-  console.log("addBtn")
-  return 
+    setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: false}))
+    setEditingId(null)
+    setAlert("idle");
+    setTaskName("");
+    console.log("addBtn")
+    return 
   }
   function handleDelete(id){
-  const updatedTask = taskList.filter(item=> item.id !== id);
-  setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
-  setEditingId(null)
-  setTaskList(updatedTask)
-  setAlert("idle");
-  setTaskName("")
-  console.log("handleDelete")
+    const updatedTask = taskList.filter(item=> item.id !== id);
+    setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
+    setEditingId(null)
+    setTaskList(updatedTask)
+    setAlert("idle");
+    setTaskName("")
+    console.log("handleDelete")
   }
   function handleCancel(){
-  setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
-  console.log("handleCancel");
-  setEditingId(null)
-  setTaskName("");
-  return setAlert("idle");
+    setAdd(prev=> ({...prev, taskPrompt: false, isEdit: false}));
+    console.log("handleCancel");
+    setEditingId(null)
+    setTaskName("");
+    return setAlert("idle");
   }
   function handleMoveUp(index){
-  const updatedTask = [...taskList];
-  setAlert("idle");
-  console.log("top", index, updatedTask.length)
-  if (index+updatedTask.length === updatedTask.length) return setAlert("top");
-  if (index < updatedTask.length){
-    [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
-    setTaskList(updatedTask)
-  }
+    const updatedTask = [...taskList];
+    setAlert("idle");
+    console.log("top", index, updatedTask.length)
+    if (index+updatedTask.length === updatedTask.length) return setAlert("top");
+    if (index < updatedTask.length){
+      [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
+      setTaskList(updatedTask)
+    }
   }
   function handleMoveDown(index){
-  setAlert("idle");
-  const updatedTask = [...taskList];
-  if (index+1 === updatedTask.length) return setAlert("down");
-  if (index < updatedTask.length){ 
-    [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]]
-    setTaskList(updatedTask)
-  }
-  console.log("movedown", index+1, updatedTask.length)
+    setAlert("idle");
+    const updatedTask = [...taskList];
+    if (index+1 === updatedTask.length) return setAlert("down");
+    if (index < updatedTask.length){ 
+      [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]]
+      setTaskList(updatedTask)
+    }
+    console.log("movedown", index+1, updatedTask.length)
   }
   function handleSubmit(e){
-  e.preventDefault();
-  const tTask = taskName.trim();
-  const isDuplicate = taskList.some(item=> item.id !== editingId && item.text === tTask)
-  if (tTask === ""){
-    console.log("blank")
-    return setAlert("blank");
-  }
-  if (isDuplicate){
-    console.log("isDup")
-    return setAlert("duplicate");
-  }
-  if (add.isEdit){
-    setTaskList(task=> task.map(item=> item.id === editingId ? {...item, text: tTask} : item))
-    setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
-    setEditingId(null)
+    e.preventDefault();
+    const tTask = taskName.trim();
+    const isDuplicate = taskList.some(item=> item.id !== editingId && item.text === tTask)
+    if (tTask === ""){
+      console.log("blank")
+      return setAlert("blank");
+    }
+    if (isDuplicate){
+      console.log("isDup")
+      return setAlert("duplicate");
+    }
+    if (add.isEdit){
+      setTaskList(task=> task.map(item=> item.id === editingId ? {...item, text: tTask} : item))
+      setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
+      setEditingId(null)
+      setTaskName("")
+      return
+    }
+    const newTask = {id: crypto.randomUUID(), text: tTask, status: "todo"};
+    setAdd((prev)=> ({...prev, taskPrompt: false}))
+    setTaskList((prev)=>[...prev, newTask])
+    setAlert("idle")
     setTaskName("")
-    return
   }
-  const newTask = {id: crypto.randomUUID(), text: tTask, status: "todo"};
-  setAdd((prev)=> ({...prev, taskPrompt: false}))
-  setTaskList((prev)=>[...prev, newTask])
-  setAlert("idle")
-  setTaskName("")
-  }
-  useEffect(()=>{console.log(taskList)}, [taskList])
+  // useEffect(()=>{console.log(taskList)}, [taskList])
 return (
   <section className="min-h-screen px-5 bg-slate-900 text-white overflow-hidden">
     <header className="flex items-center justify-center">
@@ -145,14 +137,16 @@ return (
         {add.taskPrompt && 
           <AddTaskComponent 
             alert={alert} 
-            taskRef={taskRef} 
             taskName={taskName}
+            taskRef={taskRef} 
             handleChange={handleChange} 
             handleSubmit={handleSubmit} 
             handleCancel={handleCancel} />}
         {!add.taskPrompt && 
           <InProg className="pb-10" 
             taskList={taskList}
+            taskName={taskName}
+            handleChange={handleChange} 
             handleMoveUp={handleMoveUp}
             handleMoveDown={handleMoveDown} 
             handleEdit={handleEdit} 
@@ -164,6 +158,7 @@ return (
       <section>
         <Done alert={alert}
           taskList={taskList}
+          handleChange={handleChange} 
           handleMoveUp={handleMoveUp}
           handleMoveDown={handleMoveDown} 
           handleEdit={handleEdit} 
