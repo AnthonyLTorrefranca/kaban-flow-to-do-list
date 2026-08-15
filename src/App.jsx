@@ -79,7 +79,7 @@ export default function App() {
   function handleMoveUp(id){
     const updatedTask = [...taskList];
     const taskId = updatedTask.findIndex(item=> item.id === id);
-    console.log("moveUp", updatedTask.length, taskId)
+    console.log("moveUp", taskId, updatedTask.length)
     if (taskId === 0) return setAlert("top");
     setAlert("idle");
     if (taskId <= updatedTask.length){
@@ -87,15 +87,16 @@ export default function App() {
       setTaskList(updatedTask);
     }
   }
-  function handleMoveDown(index){
+  function handleMoveDown(id){
     setAlert("idle");
     const updatedTask = [...taskList];
-    if (index+1 === updatedTask.length) return setAlert("down");
-    if (index < updatedTask.length){ 
-      [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]]
+    const taskId = updatedTask.findIndex(item=> item.id === id);
+    if (taskId+1 === updatedTask.length) return setAlert("down");
+    if (taskId < updatedTask.length){
+      [updatedTask[taskId], updatedTask[taskId+1]] = [updatedTask[taskId+1], updatedTask[taskId]];
       setTaskList(updatedTask)
     }
-    console.log("movedown", index, updatedTask.length)
+    console.log("movedown", taskId+1, updatedTask.length)
   }
   function handleSubmit(e){
     e.preventDefault();
