@@ -86,12 +86,6 @@ export default function App() {
       [updatedTask[taskId], updatedTask[taskId-1]] = [updatedTask[taskId-1], updatedTask[taskId]];
       setTaskList(updatedTask);
     }
-    // console.log("top", index, updatedTask.length)
-    // if (index+updatedTask.length === updatedTask.length) return setAlert("top");
-    // if (index < updatedTask.length){
-    //   [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
-    //   setTaskList(updatedTask)
-    // }
   }
   function handleMoveDown(index){
     setAlert("idle");
