@@ -23,7 +23,6 @@ export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo
                 handleMoveDown={handleMoveDown}
                 handleEdit={handleEdit} />
               <TaskListTransfer id={item.id}
-                handleMoveDown={handleMoveDown}
                 moveToTodo={moveToTodo}
                 moveToProg={moveToProg}
                 moveToDone={moveToDone}/>

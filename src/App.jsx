@@ -15,10 +15,16 @@ export default function App() {
     const task = localStorage.getItem("taskList");
     return task ? JSON.parse(task) : []
   })
+  // const [taskList, setTaskList] = useState(()=>{
+  //   const task = localStorage.getItem("taskList", JSON.stringify(taskList));
+  //   return task ? JSON.parse(task) : [];
+  // })
   useEffect(()=>{
     localStorage.setItem("taskList", JSON.stringify(taskList))
   }, [taskList])
+
   useEffect(()=> { if (add.taskPrompt){return taskRef.current.focus()}}, [add.taskPrompt, add.isEdit])
+
   function moveToTodo(id){
     setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "todo"}: item))
@@ -70,15 +76,22 @@ export default function App() {
     setTaskName("");
     return setAlert("idle");
   }
-  function handleMoveUp(index){
+  function handleMoveUp(id){
     const updatedTask = [...taskList];
+    const taskId = updatedTask.findIndex(item=> item.id === id);
+    console.log("moveUp", updatedTask.length, taskId)
+    if (taskId === 0) return setAlert("top");
     setAlert("idle");
-    console.log("top", index, updatedTask.length)
-    if (index+updatedTask.length === updatedTask.length) return setAlert("top");
-    if (index < updatedTask.length){
-      [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
-      setTaskList(updatedTask)
+    if (taskId <= updatedTask.length){
+      [updatedTask[taskId], updatedTask[taskId-1]] = [updatedTask[taskId-1], updatedTask[taskId]];
+      setTaskList(updatedTask);
     }
+    // console.log("top", index, updatedTask.length)
+    // if (index+updatedTask.length === updatedTask.length) return setAlert("top");
+    // if (index < updatedTask.length){
+    //   [updatedTask[index], updatedTask[index-1]] = [updatedTask[index-1], updatedTask[index]];
+    //   setTaskList(updatedTask)
+    // }
   }
   function handleMoveDown(index){
     setAlert("idle");
@@ -88,7 +101,7 @@ export default function App() {
       [updatedTask[index+1], updatedTask[index]] = [updatedTask[index], updatedTask[index+1]]
       setTaskList(updatedTask)
     }
-    console.log("movedown", index+1, updatedTask.length)
+    console.log("movedown", index, updatedTask.length)
   }
   function handleSubmit(e){
     e.preventDefault();
