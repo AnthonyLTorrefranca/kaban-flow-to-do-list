@@ -10,19 +10,22 @@ export default function App() {
   const [editingId, setEditingId] = useState(null)
   const [taskName, setTaskName] = useState("");
   const [alert, setAlert] = useState("idle");
-
   const [taskList, setTaskList] = useState(()=>{
-    const task = localStorage.getItem("taskList");
-    return task ? JSON.parse(task) : []
+    const saved = localStorage.getItem("taskList");
+    return saved ? JSON.parse(saved) : [];
   })
   // const [taskList, setTaskList] = useState(()=>{
   //   const task = localStorage.getItem("taskList", JSON.stringify(taskList));
   //   return task ? JSON.parse(task) : [];
   // })
-  useEffect(()=>{
-    localStorage.setItem("taskList", JSON.stringify(taskList))
-  }, [taskList])
+  // useEffect(()=>{
+  //   localStorage.setItem("taskList", JSON.stringify(taskList))
+  // }, [taskList])
 
+  // local storage 
+  useEffect(()=> {localStorage.setItem("taskList", JSON.stringify(taskList))}, [taskList])
+
+  //focus on input box
   useEffect(()=> { if (add.taskPrompt){return taskRef.current.focus()}}, [add.taskPrompt, add.isEdit])
 
   function moveToTodo(id){
@@ -36,6 +39,10 @@ export default function App() {
     setAlert("idle");
   }
   function moveToDone(id){
+    const sameSection = taskList.find(item=> item.id === id);
+    const taskStatus = sameSection.status;
+    if (taskStatus === "done") return setAlert("duplicate");
+    console.log(taskStatus)
     setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "done"}: item))
     setAlert("idle");
