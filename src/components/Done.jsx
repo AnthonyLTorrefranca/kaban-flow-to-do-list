@@ -1,4 +1,4 @@
-// import TaskMap from "./TaskComponent/TaskMap";
+import Alert from './TaskComponent/Alert'
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
 import TaskListMove from './TaskComponent/TaskListMove'
 
@@ -8,8 +8,9 @@ export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo
       <section className="flex flex-col items-center justify-baseline min-h-screen m-w-screen overflow-hidden p-10 bg-gray-500 border">
         <section className="flex items-center justify-center">
           <p className="font text-2xl">Done</p>
+          <Alert />
         </section>
-        <section className="taskList pt-10">
+        <section>
           {taskList.filter(task=> task.status === "done").map(item=>
             <section className="pt-5 px-5 m-5 border-2 border-green-500  rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
               <section className="header flex justify-around">

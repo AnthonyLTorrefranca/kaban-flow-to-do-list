@@ -14,13 +14,6 @@ export default function App() {
     const saved = localStorage.getItem("taskList");
     return saved ? JSON.parse(saved) : [];
   })
-  // const [taskList, setTaskList] = useState(()=>{
-  //   const task = localStorage.getItem("taskList", JSON.stringify(taskList));
-  //   return task ? JSON.parse(task) : [];
-  // })
-  // useEffect(()=>{
-  //   localStorage.setItem("taskList", JSON.stringify(taskList))
-  // }, [taskList])
 
   // local storage 
   useEffect(()=> {localStorage.setItem("taskList", JSON.stringify(taskList))}, [taskList])
