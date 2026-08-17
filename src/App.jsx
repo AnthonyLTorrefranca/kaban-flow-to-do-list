@@ -115,18 +115,21 @@ export default function App() {
   }
 
   function handleMoveUp(id, section = 'todo') {
-    const updatedTask = [...taskList];
-    const taskId = updatedTask.findIndex(item => item.id === id);
-    console.log(taskId)
-    if (taskId === 0) {
-      updateAlert(section, 'top');
-      setTimeout(() => updateAlert(section, 'idle'), 1500);
-      return;
-    }
+    const task = taskList.find(item=> item.id === id)
+    console.log(task.status)
+    // const updatedTask = [...taskList];
+    // const taskId = updatedTask.find(item => item.id === id).status;
+    // const taskInd = taskInd.index
+    // console.log(taskId)
+    // if (taskId === 0) {
+    //   updateAlert(section, 'top');
+    //   setTimeout(() => updateAlert(section, 'idle'), 1500);
+    //   return;
+    // }
 
-    updateAlert(section, 'idle');
-    [updatedTask[taskId], updatedTask[taskId - 1]] = [updatedTask[taskId - 1], updatedTask[taskId]];
-    setTaskList(updatedTask);
+    // updateAlert(section, 'idle');
+    // [updatedTask[taskId], updatedTask[taskId - 1]] = [updatedTask[taskId - 1], updatedTask[taskId]];
+    // setTaskList(updatedTask);
   }
 
   function handleMoveDown(id, section = 'todo') {

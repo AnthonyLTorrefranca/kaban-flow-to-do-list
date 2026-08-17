@@ -9,7 +9,7 @@ export default function TaskList({ alert, taskList, moveToTodo, moveToProg, move
         <Alert alert={alert} title="To do list" />
       </section>
         {taskList.filter(task => task.status === 'todo').map(item => (
-          <section className="pt-5 px-5 m-5 border-2 border-red-500 rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
+          <section className="pt-5 px-5 m-3 border-2 border-red-500 rounded-2xl bg-slate-800 text-slate-100 p-4 shadow-lg overflow-hidden" key={item.id}>
             <section className="flex justify-around">
               <span>{item.text}</span>
               <button className="rounded hover:cursor-pointer hover:bg-red-500" onClick={() => handleDelete(item.id)}>❌</button>
