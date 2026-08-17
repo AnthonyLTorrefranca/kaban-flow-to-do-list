@@ -48,14 +48,12 @@ export default function App() {
       updateAlert('todo', 'same');
       return;
     }
-
     resetAlerts();
   }
 
   function moveToProg(id) {
     const selectedTask = taskList.find(item => item.id === id);
     if (!selectedTask) return;
-
     if (selectedTask.status === 'progress') {
       updateAlert('progress', 'same');
       return;
@@ -71,12 +69,10 @@ export default function App() {
   function moveToDone(id) {
     const selectedTask = taskList.find(item => item.id === id);
     if (!selectedTask) return;
-
     if (selectedTask.status === 'done') {
       updateAlert('done', 'same');
       return;
     }
-
     setAdd(prev => ({ ...prev, taskPrompt: false, isEdit: false }));
     setTaskList(prevTasks =>
       prevTasks.map(item => (item.id === id ? { ...item, status: 'done' } : item))
@@ -121,7 +117,7 @@ export default function App() {
   function handleMoveUp(id, section = 'todo') {
     const updatedTask = [...taskList];
     const taskId = updatedTask.findIndex(item => item.id === id);
-
+    console.log(taskId)
     if (taskId === 0) {
       updateAlert(section, 'top');
       setTimeout(() => updateAlert(section, 'idle'), 1500);
@@ -136,13 +132,11 @@ export default function App() {
   function handleMoveDown(id, section = 'todo') {
     const updatedTask = [...taskList];
     const taskId = updatedTask.findIndex(item => item.id === id);
-
     if (taskId + 1 === updatedTask.length) {
       updateAlert(section, 'down');
       setTimeout(() => updateAlert(section, 'idle'), 1500);
       return;
     }
-
     updateAlert(section, 'idle');
     [updatedTask[taskId], updatedTask[taskId + 1]] = [updatedTask[taskId + 1], updatedTask[taskId]];
     setTaskList(updatedTask);
@@ -152,17 +146,14 @@ export default function App() {
     e.preventDefault();
     const tTask = taskName.trim();
     const isDuplicate = taskList.some(item => item.id !== editingId && item.text === tTask);
-
     if (tTask === '') {
       updateAlert('todo', 'blank');
       return;
     }
-
     if (isDuplicate) {
       updateAlert('todo', 'duplicate');
       return;
     }
-
     if (add.isEdit) {
       setTaskList(task =>
         task.map(item => (item.id === editingId ? { ...item, text: tTask } : item))
@@ -172,7 +163,6 @@ export default function App() {
       setTaskName('');
       return;
     }
-
     const newTask = { id: crypto.randomUUID(), text: tTask, status: 'todo' };
     setAdd(prev => ({ ...prev, taskPrompt: false }));
     setTaskList(prev => [...prev, newTask]);
