@@ -2,13 +2,13 @@ import Alert from './TaskComponent/Alert'
 import TaskListTransfer from './TaskComponent/TaskListTransfer'
 import TaskListMove from './TaskComponent/TaskListMove'
 
-export default function Done({taskList, handleMoveUp, handleMoveDown, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit,}) {
+export default function Done({alert, taskList, handleMoveUp, handleMoveDown, moveToTodo, moveToProg, moveToDone, handleDelete, handleEdit,}) {
   return (
     <>
       <section className="flex flex-col items-center justify-baseline min-h-screen m-w-screen overflow-hidden p-10 bg-gray-500 border">
         <section className="flex items-center justify-center">
-          <p className="font text-2xl">Done</p>
-          <Alert />
+          {alert === "idle" && <p className="font text-2xl">Done</p>}
+          {alert === "duplicate" && <Alert alert={alert} />}
         </section>
         <section>
           {taskList.filter(task=> task.status === "done").map(item=>
