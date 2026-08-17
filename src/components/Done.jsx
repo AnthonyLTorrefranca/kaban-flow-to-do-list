@@ -8,6 +8,7 @@ export default function Done({alert, taskList, handleMoveUp, handleMoveDown, mov
       <section className="flex flex-col items-center justify-baseline min-h-screen m-w-screen overflow-hidden p-10 bg-gray-500 border">
         <section className="flex items-center justify-center">
           {alert === "idle" && <p className="font text-2xl">Done</p>}
+          {alert === "same" && <Alert alert={alert} />}
           {alert === "duplicate" && <Alert alert={alert} />}
         </section>
         <section>

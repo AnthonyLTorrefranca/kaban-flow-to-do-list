@@ -19,28 +19,29 @@ export default function App() {
   useEffect(()=> {localStorage.setItem("taskList", JSON.stringify(taskList))}, [taskList])
 
   //focus on input box
-  useEffect(()=> { if (add.taskPrompt){return taskRef.current.focus()}}, [add.taskPrompt, add.isEdit])
+  useEffect(()=> { if (add.taskPrompt)taskRef.current.focus()}, [add.taskPrompt, add.isEdit])
 
   function moveToTodo(id){
     setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "todo"}: item))
-    setAlert("idle");
+    const task = taskList.find(item=> item.id === id)
+    if (task.status === "todo") return setAlert("same")
+      setAlert("idle")
   }
   function moveToProg(id){
     setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "progress"}: item))
-    setAlert("idle");
+    const task = taskList.find(item=> item.id === id)
+    if (task.status === "progress") return setAlert("same")
+      setAlert("idle");
   }
   function moveToDone(id){
-    const sameSection = taskList.find(item=> item.id === id);
-    const taskStatus = sameSection.status;
-    if (taskStatus === "done") return setAlert("duplicate");
-    console.log(taskStatus)
+    const task = taskList.find(item=> item.id === id)
+    if (task.status === "done") return setAlert("same")
     setAdd((prev)=> ({...prev, taskPrompt: false, isEdit: false}))
     setTaskList(prevTasks=> prevTasks.map(item=> item.id === id ? {...item, status: "done"}: item))
     setAlert("idle");
-    console.log(taskList)
-  }
+    }
   function handleEdit(id){
     setAdd((prev)=> ({...prev, taskPrompt: true, isEdit: true}))
     const selectedTask = taskList.find(item=> item.id === id);
@@ -123,7 +124,7 @@ export default function App() {
     setAlert("idle")
     setTaskName("")
   }
-  useEffect(()=>{console.log(editingId, add)}, [editingId, add])
+  // useEffect(()=>{console.log(editingId, add)}, [editingId, add])
 return (
   <section className="min-h-screen px-5 bg-slate-900 text-white overflow-hidden">
     <header className="flex items-center justify-center">
