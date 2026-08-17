@@ -1,14 +1,10 @@
-export default function Alert({alert}) {
-  return (
-    <section>
-      {alert === "idle" && <p className="flex items-center justify-center text-2xl">Task List</p>}
-      {alert === "blank" && <p className="flex items-center justify-center text-2xl text-red-500">Task cannot be blank!</p>}
-      {alert === "top" && <p className="flex items-center justify-center text-2xl text-red-500">All the way up!</p>}
-      {alert === "down" && <p className="flex items-center justify-center text-2xl text-red-500">All the way down!</p>}
-      {alert === "duplicate" && <p className="flex items-center justify-center text-2xl text-red-500">Duplicate Task!</p>}
-      {alert === "edit" && <p className="flex items-center justify-center text-2xl">Edit task mode.</p>}
-      {alert === "max" && <p className="flex items-center justify-center text-2xl text-red-500">Max Character!</p>}
-      {alert === "same" && <p className="flex items-center justify-center text-2xl text-red-500">In the same section!</p>}
-    </section>
-  )
+export default function Alert({ alert, title = 'Task List' }) {
+  if (alert === 'idle') return <p className="text-2xl">{title}</p>;
+  if (alert === 'top') return <p className="text-red-500 text-2xl">Already at the top!</p>;
+  if (alert === 'down') return <p className="text-red-500 text-2xl">Already at the bottom!</p>;
+  if (alert === 'blank') return <p className="text-red-500 text-2xl">Task cannot be blank!</p>;
+  if (alert === 'duplicate') return <p className="text-red-500 text-2xl">Duplicate Task!</p>;
+  if (alert === 'same') return <p className="text-red-500 text-2xl">Already in this section!</p>;
+  return <p className="text-2xl">{title}</p>;
 }
+
