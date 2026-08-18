@@ -24,7 +24,7 @@ export default function App() {
   }, [taskList]);
 
   useEffect(() => {
-    if (add.taskPrompt && taskRef.current) taskRef.current?.focus();
+    if (add.taskPrompt && taskRef.current) taskRef.current.focus();
   }, [add.taskPrompt]);
 
   const updateAlert = (section, value) => {
@@ -91,6 +91,7 @@ export default function App() {
     setAdd((prev) => ({ ...prev, taskPrompt: true, isEdit: true }));
     setTaskName(selectedTask.text);
     setEditingId(selectedTask.id);
+    taskRef.current?.focus();
     console.log("eidt");
   }
 
@@ -103,9 +104,7 @@ export default function App() {
     setEditingId(null);
     resetAlerts();
     setTaskName("");
-    setTimeout(() => {
-      taskRef.current.focus();
-    }, 100);
+    taskRef.current?.focus();
   }
 
   function handleDelete(id) {
@@ -125,10 +124,13 @@ export default function App() {
   }
 
   function handleMoveUp(id, status) {
+    setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
     const updatedTask = [...taskList];
     const taskStatus = taskList.filter((item) => item.status === status);
-    const taskId = taskStatus.findIndex((item) => item.id === id);
-    if (taskId === 0) return updateAlert(status, "top");
+    const taskInd = taskStatus.findIndex((item) => item.id === id);
+    const taskId = taskStatus.find((item) => item.id === id);
+    console.log("moveUp", taskInd);
+    if (taskInd === 0) return updateAlert(status, "top");
     // if (taskId < taskStatus.length)
     //   [updatedTask[taskId], updatedTask[taskId - 1]] = [
     //     updatedTask[taskId - 1],
@@ -136,11 +138,11 @@ export default function App() {
     //   ];
     // setTaskList(updatedTask);
     return updateAlert(status, "idle");
-    console.log(updatedTask);
   }
 
   function handleMoveDown(id, section = "todo") {
     const updatedTask = [...taskList];
+    setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
     const taskId = updatedTask.findIndex((item) => item.id === id);
     if (taskId + 1 === updatedTask.length) {
       updateAlert(section, "down");
@@ -153,6 +155,7 @@ export default function App() {
       updatedTask[taskId],
     ];
     setTaskList(updatedTask);
+    console.log("moveDown");
   }
 
   function handleSubmit(e) {
