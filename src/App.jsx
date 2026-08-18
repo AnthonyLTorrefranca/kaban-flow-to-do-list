@@ -115,7 +115,8 @@ export default function App() {
   }
 
   function handleMoveUp(id){
-    console.log("up")
+    console.log("up", id)
+
   }
 
   function handleMoveDown(id, section = 'todo') {
