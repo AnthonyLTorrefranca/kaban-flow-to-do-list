@@ -24,7 +24,7 @@ export default function App() {
   }, [taskList]);
 
   useEffect(() => {
-    if (add.taskPrompt && taskRef.current) taskRef.current.focus();
+    if (add.taskPrompt && taskRef.current) taskRef.current?.focus();
   }, [add.taskPrompt, add.isEdit]);
 
   const updateAlert = (section, value) => {
@@ -92,10 +92,6 @@ export default function App() {
     setTaskName(selectedTask.text);
     setEditingId(selectedTask.id);
     console.log("eidt");
-    // setAdd((prev) => ({ ...prev, taskPrompt: true, isEdit: true }));
-    // const selectedTask = taskList.find((item) => item.id === id);
-    // setEditingId(selectedTask.id);
-    // setTaskName(selectedTask.text);
   }
 
   function handleChange(e) {
@@ -131,14 +127,14 @@ export default function App() {
     const taskStatus = taskList.filter((item) => item.status === status);
     const taskId = taskStatus.findIndex((item) => item.id === id);
     if (taskId === 0) return updateAlert(status, "top");
-    if (taskId < taskStatus.length)
-      [updatedTask[taskId], updatedTask[taskId - 1]] = [
-        updatedTask[taskId - 1],
-        updatedTask[taskId],
-      ];
-    setTaskList(updatedTask);
+    // if (taskId < taskStatus.length)
+    //   [updatedTask[taskId], updatedTask[taskId - 1]] = [
+    //     updatedTask[taskId - 1],
+    //     updatedTask[taskId],
+    //   ];
+    // setTaskList(updatedTask);
     return updateAlert(status, "idle");
-    console.log();
+    console.log(updatedTask);
   }
 
   function handleMoveDown(id, section = "todo") {
