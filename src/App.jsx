@@ -25,7 +25,7 @@ export default function App() {
 
   useEffect(() => {
     if (add.taskPrompt && taskRef.current) taskRef.current?.focus();
-  }, [add.taskPrompt, add.isEdit]);
+  }, [add.taskPrompt]);
 
   const updateAlert = (section, value) => {
     setAlerts((prev) => ({ ...prev, [section]: value }));
@@ -103,7 +103,9 @@ export default function App() {
     setEditingId(null);
     resetAlerts();
     setTaskName("");
-    taskRef.current.focus();
+    setTimeout(() => {
+      taskRef.current.focus();
+    }, 100);
   }
 
   function handleDelete(id) {
