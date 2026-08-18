@@ -114,9 +114,12 @@ export default function App() {
     resetAlerts();
   }
 
-  function handleMoveUp(id){
-    console.log("up", id)
-
+  function handleMoveUp(id, status){
+    const updatedTask = [...taskList]
+    const taskStatus = updatedTask.filter(item=> item.status === status);
+    const taskInd = taskStatus.findIndex(item=> item.id === id);
+    if (taskInd === 0) return updateAlert(status, "top");
+    console.log(taskStatus, taskInd)
   }
 
   function handleMoveDown(id, section = 'todo') {

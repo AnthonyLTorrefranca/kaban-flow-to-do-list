@@ -16,6 +16,8 @@ export default function TaskList({ alert, taskList, moveToTodo, moveToProg, move
             </section>
             <TaskListMove
               id={item.id}
+              item={item.text}
+              item={item.status}
               section="todo"
               taskList={taskList}
               handleMoveUp={handleMoveUp}
