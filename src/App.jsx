@@ -126,36 +126,31 @@ export default function App() {
   function handleMoveUp(id, status) {
     setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
     const updatedTask = [...taskList];
-    const taskStatus = taskList.filter((item) => item.status === status);
-    const taskInd = taskStatus.findIndex((item) => item.id === id);
-    const taskId = taskStatus.find((item) => item.id === id);
-    console.log("moveUp", taskInd);
+    const taskInd = updatedTask.findIndex(
+      (item) => item.id === id && item.status === status,
+    );
     if (taskInd === 0) return updateAlert(status, "top");
-    // if (taskId < taskStatus.length)
-    //   [updatedTask[taskId], updatedTask[taskId - 1]] = [
-    //     updatedTask[taskId - 1],
-    //     updatedTask[taskId],
-    //   ];
-    // setTaskList(updatedTask);
+    if (taskInd > 0) {
+      [updatedTask[taskInd], updatedTask[taskInd - 1]] = [
+        updatedTask[taskInd - 1],
+        updatedTask[taskInd],
+      ];
+    }
+    console.log(taskInd > 0, taskInd);
+    // console.log(taskInd);
+    setTaskList(updatedTask);
     return updateAlert(status, "idle");
   }
 
-  function handleMoveDown(id, section = "todo") {
+  function handleMoveDown(id, status) {
     const updatedTask = [...taskList];
-    setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
-    const taskId = updatedTask.findIndex((item) => item.id === id);
-    if (taskId + 1 === updatedTask.length) {
-      updateAlert(section, "down");
-      setTimeout(() => updateAlert(section, "idle"), 1500);
-      return;
-    }
-    updateAlert(section, "idle");
-    [updatedTask[taskId], updatedTask[taskId + 1]] = [
-      updatedTask[taskId + 1],
-      updatedTask[taskId],
-    ];
-    setTaskList(updatedTask);
-    console.log("moveDown");
+    const filTask = updatedTask.filter((item) => item.status === status);
+    const taskInd = filTask.findIndex(
+      (item) => item.id === id && item.status === status,
+    );
+    if (taskInd === taskInd) return updateAlert(status, "down");
+    console.log(taskInd > 0, taskInd);
+    return updateAlert(status, "idle");
   }
 
   function handleSubmit(e) {
