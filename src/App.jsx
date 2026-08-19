@@ -127,29 +127,46 @@ export default function App() {
     resetAlerts();
     setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
     const updatedTask = [...taskList];
-    const taskInd = updatedTask.findIndex(
-      (item) => item.id === id && item.status === status,
-    );
+    const filTask = updatedTask.filter((item) => item.status === status);
+    const taskInd = filTask.findIndex((item) => item.id === id);
     if (taskInd === 0) return updateAlert(status, "top");
-    if (taskInd > 0) {
-      [updatedTask[taskInd], updatedTask[taskInd - 1]] = [
-        updatedTask[taskInd - 1],
-        updatedTask[taskInd],
-      ];
-    }
-    console.log(taskInd > 0, taskInd);
+    // [updatedTask[taskInd], updatedTask[taskInd - 1]] = [
+    //   updatedTask[taskInd - 1],
+    //   updatedTask[taskInd],
+    // ];
     setTaskList(updatedTask);
-    return updateAlert(status, "idle");
+    console.log(taskInd, filTask.length);
+    // const updatedTask = [...taskList];
+    // const taskInd = updatedTask.findIndex(
+    //   (item) => item.id === id && item.status === status,
+    // );
+    // if (taskInd === 0) return updateAlert(status, "top");
+    // if (taskInd > 0) {
+    //   [updatedTask[taskInd], updatedTask[taskInd - 1]] = [
+    //     updatedTask[taskInd - 1],
+    //     updatedTask[taskInd],
+    //   ];
+    // }
+    // console.log(taskInd > 0, taskInd);
+    // setTaskList(updatedTask);
+    // return updateAlert(status, "idle");
   }
 
   function handleMoveDown(id, status) {
     resetAlerts();
-    const updatedTask = [...taskList];
-    const filTask = updatedTask.filter((item) => item.status === status);
-    const taskInd = filTask.findIndex((item) => item.id === id);
-    if (taskInd + 1 === filTask.length) return updateAlert(status, "down");
+    console.log("down");
+    // const updatedTask = [...taskList];
+    // const filTask = updatedTask.filter((item) => item.status === status);
+    // const taskInd = filTask.findIndex((item) => item.id === id);
+    // if (taskInd + 1 === filTask.length) return updateAlert(status, "down");
+    // if (taskInd < filTask.length - 1) {
+    //   [updatedTask[taskInd + 1], updatedTask[taskInd]] = [
+    //     updatedTask[taskInd],
+    //     updatedTask[taskInd + 1],
+    //   ];
+    // }
+    // console.log(taskInd < filTask.length);
     // setTaskList(updatedTask);
-    // console.log(filTask.length);
     return;
   }
 
