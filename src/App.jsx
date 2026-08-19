@@ -147,8 +147,9 @@ export default function App() {
     const updatedTask = [...taskList];
     const filTask = updatedTask.filter((item) => item.status === status);
     const taskInd = filTask.findIndex((item) => item.id === id);
+    if (taskInd + 1 === filTask.length) return updateAlert(status, "down");
     // setTaskList(updatedTask);
-    console.log(taskInd);
+    // console.log(filTask.length);
     return;
   }
 
