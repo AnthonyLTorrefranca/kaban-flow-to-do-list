@@ -124,6 +124,7 @@ export default function App() {
   }
 
   function handleMoveUp(id, status) {
+    resetAlerts();
     setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
     const updatedTask = [...taskList];
     const taskInd = updatedTask.findIndex(
@@ -143,14 +144,15 @@ export default function App() {
   }
 
   function handleMoveDown(id, status) {
+    resetAlerts();
     const updatedTask = [...taskList];
     const filTask = updatedTask.filter((item) => item.status === status);
     const taskInd = filTask.findIndex(
       (item) => item.id === id && item.status === status,
     );
-    if (taskInd === taskInd) return updateAlert(status, "down");
-    console.log(taskInd > 0, taskInd);
-    return updateAlert(status, "idle");
+    // console.log(taskInd + 1 === filTask.length, taskInd, filTask.length);
+    if (taskInd + 1 === filTask.length) return updateAlert(status, "down");
+    return;
   }
 
   function handleSubmit(e) {
