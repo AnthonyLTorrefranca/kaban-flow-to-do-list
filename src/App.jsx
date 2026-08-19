@@ -126,31 +126,63 @@ export default function App() {
   function handleMoveUp(id, status) {
     resetAlerts();
     setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
+
     const updatedTask = [...taskList];
     const filTask = updatedTask.filter((item) => item.status === status);
     const taskInd = filTask.findIndex((item) => item.id === id);
+
+    if (taskInd === -1) return; // not found
     if (taskInd === 0) return updateAlert(status, "top");
-    // [updatedTask[taskInd], updatedTask[taskInd - 1]] = [
-    //   updatedTask[taskInd - 1],
-    //   updatedTask[taskInd],
-    // ];
+
+    const currentTask = filTask[taskInd];
+    const prevTask = filTask[taskInd - 1];
+
+    const currentInd = updatedTask.findIndex(
+      (item) => item.id === currentTask.id,
+    );
+    const prevInd = updatedTask.findIndex((item) => item.id === prevTask.id);
+
+    // ✅ Proper swap
+    [updatedTask[currentInd], updatedTask[prevInd]] = [
+      updatedTask[prevInd],
+      updatedTask[currentInd],
+    ];
+
     setTaskList(updatedTask);
-    console.log(taskInd, filTask.length);
-    // const updatedTask = [...taskList];
-    // const taskInd = updatedTask.findIndex(
-    //   (item) => item.id === id && item.status === status,
-    // );
-    // if (taskInd === 0) return updateAlert(status, "top");
-    // if (taskInd > 0) {
-    //   [updatedTask[taskInd], updatedTask[taskInd - 1]] = [
-    //     updatedTask[taskInd - 1],
-    //     updatedTask[taskInd],
-    //   ];
-    // }
-    // console.log(taskInd > 0, taskInd);
-    // setTaskList(updatedTask);
-    // return updateAlert(status, "idle");
+    return updateAlert(status, "idle");
   }
+
+  // function handleMoveUp(id, status) {
+  //   resetAlerts();
+  //   setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
+  //   const updatedTask = [...taskList];
+  //   const filTask = updatedTask.filter((item) => item.status === status);
+  //   const taskInd = filTask.findIndex((item) => item.id === id);
+
+  //   if (taskInd === 0) return updateAlert(status, "top");
+
+  //   const currentTask = filTask[taskInd];
+  //   const prevTask = filTask[taskInd - 1];
+
+  //   const currentInd = filTask.findIndex((item) => item.id === currentTask.id);
+  //   const prevInd = filTask.findIndex((item) => item.id === prevTask.id);
+
+  //   if (taskInd > 0) {
+  //     [updatedTask[currentInd], updatedTask[prevInd]] = [
+  //       updatedTask[prevInd],
+  //       updatedTask[currentInd],
+  //     ];
+  //   }
+  //   console.log("up");
+  //   setTaskList(updatedTask);
+  //   // if (taskInd < 0) {
+  //   //   [updatedTask[currentInd], updatedTask[prevInd]] = [
+  //   //     updatedTask[prevInd],
+  //   //     updatedTask[currentInd],
+  //   //   ];
+  //   //   setTaskList(updatedTask);
+  //   // }
+  // }
 
   function handleMoveDown(id, status) {
     resetAlerts();
