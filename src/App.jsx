@@ -138,7 +138,6 @@ export default function App() {
       ];
     }
     console.log(taskInd > 0, taskInd);
-    // console.log(taskInd);
     setTaskList(updatedTask);
     return updateAlert(status, "idle");
   }
@@ -147,11 +146,9 @@ export default function App() {
     resetAlerts();
     const updatedTask = [...taskList];
     const filTask = updatedTask.filter((item) => item.status === status);
-    const taskInd = filTask.findIndex(
-      (item) => item.id === id && item.status === status,
-    );
-    // console.log(taskInd + 1 === filTask.length, taskInd, filTask.length);
-    if (taskInd + 1 === filTask.length) return updateAlert(status, "down");
+    const taskInd = filTask.findIndex((item) => item.id === id);
+    // setTaskList(updatedTask);
+    console.log(taskInd);
     return;
   }
 
