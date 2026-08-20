@@ -126,16 +126,12 @@ export default function App() {
   function handleMoveUp(id, status) {
     resetAlerts();
     setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
-    const tasks = [...taskList];
+    const taskStat = taskList.filter((item) => item.status === status);
+    const taskInd = taskStat.findIndex((item) => item.id === id);
+    if (taskInd === 0) return updateAlert(status, "top");
+    const updatedTask = [...taskList];
 
-    const currTask = tasks.filter((item) => item.status === status);
-    const currRealInd = currTask.findIndex((item) => item.id === id);
-    const prevRealInd = currTask.findIndex((item) => item.id === id) - 1;
-
-    if (currRealInd === 0) return updateAlert(status, "top");
-    // const prevTask =
-    console.log(currRealInd, prevRealInd);
-    return updateAlert(status, "idle");
+    console.log(taskInd);
   }
 
   // function handleMoveUp(id, status) {
