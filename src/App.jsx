@@ -158,8 +158,23 @@ export default function App() {
     const taskInd = taskStat.findIndex((item) => item.id === id);
 
     if (taskInd + 1 === taskStat.length) return updateAlert(status, "down");
-    const currRealInd = taskStat[taskInd];
-    return console.log("down");
+
+    const currTask = taskStat[taskInd];
+    const prevTask = taskStat[taskInd + 1];
+
+    const currRealInd = updatedTask.findIndex(
+      (item) => item.id === currTask.id,
+    );
+    const prevRealInd = updatedTask.findIndex(
+      (item) => item.id === prevTask.id,
+    );
+
+    [updatedTask[currRealInd], updatedTask[prevRealInd]] = [
+      updatedTask[prevRealInd],
+      updatedTask[currRealInd],
+    ];
+    setTaskList(updatedTask);
+    return console.log("down", prevRealInd);
   }
 
   function handleSubmit(e) {
