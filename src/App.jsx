@@ -126,12 +126,28 @@ export default function App() {
   function handleMoveUp(id, status) {
     resetAlerts();
     setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
-    const taskStat = taskList.filter((item) => item.status === status);
-    const taskInd = taskStat.findIndex((item) => item.id === id);
-    if (taskInd === 0) return updateAlert(status, "top");
     const updatedTask = [...taskList];
 
-    console.log(taskInd);
+    const taskStat = updatedTask.filter((item) => item.status === status);
+    const taskInd = taskStat.findIndex((item) => item.id === id);
+
+    if (taskInd === 0) return updateAlert(status, "top");
+
+    const currentTask = taskStat[taskInd];
+    const prevTask = taskStat[taskInd - 1];
+
+    const currRealInd = updatedTask.findIndex(
+      (item) => item.id === currentTask.id,
+    );
+    const prevRealInd = updatedTask.findIndex(
+      (item) => item.id === prevTask.id,
+    );
+    [updatedTask[currRealInd], updatedTask[prevRealInd]] = [
+      updatedTask[prevRealInd],
+      updatedTask[currRealInd],
+    ];
+    setTaskList(updatedTask);
+    console.log("up", currRealInd, prevRealInd);
   }
 
   // function handleMoveUp(id, status) {
