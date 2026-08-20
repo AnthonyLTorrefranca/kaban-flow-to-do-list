@@ -126,29 +126,15 @@ export default function App() {
   function handleMoveUp(id, status) {
     resetAlerts();
     setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
+    const tasks = [...taskList];
 
-    const updatedTask = [...taskList];
-    const filTask = updatedTask.filter((item) => item.status === status);
-    const taskInd = filTask.findIndex((item) => item.id === id);
+    const currTask = tasks.filter((item) => item.status === status);
+    const currRealInd = currTask.findIndex((item) => item.id === id);
+    const prevRealInd = currTask.findIndex((item) => item.id === id) - 1;
 
-    if (taskInd === -1) return; // not found
-    if (taskInd === 0) return updateAlert(status, "top");
-
-    const currentTask = filTask[taskInd];
-    const prevTask = filTask[taskInd - 1];
-
-    const currentInd = updatedTask.findIndex(
-      (item) => item.id === currentTask.id,
-    );
-    const prevInd = updatedTask.findIndex((item) => item.id === prevTask.id);
-
-    // ✅ Proper swap
-    [updatedTask[currentInd], updatedTask[prevInd]] = [
-      updatedTask[prevInd],
-      updatedTask[currentInd],
-    ];
-
-    setTaskList(updatedTask);
+    if (currRealInd === 0) return updateAlert(status, "top");
+    // const prevTask =
+    console.log(currRealInd, prevRealInd);
     return updateAlert(status, "idle");
   }
 
