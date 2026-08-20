@@ -151,53 +151,13 @@ export default function App() {
     console.log("up", currRealInd);
   }
 
-  // function handleMoveUp(id, status) {
-  //   resetAlerts();
-  //   setAdd((prev) => ({ ...prev, taskPrompt: false, isEdit: false }));
-  //   const updatedTask = [...taskList];
-  //   const filTask = updatedTask.filter((item) => item.status === status);
-  //   const taskInd = filTask.findIndex((item) => item.id === id);
-
-  //   if (taskInd === 0) return updateAlert(status, "top");
-
-  //   const currentTask = filTask[taskInd];
-  //   const prevTask = filTask[taskInd - 1];
-
-  //   const currentInd = filTask.findIndex((item) => item.id === currentTask.id);
-  //   const prevInd = filTask.findIndex((item) => item.id === prevTask.id);
-
-  //   if (taskInd > 0) {
-  //     [updatedTask[currentInd], updatedTask[prevInd]] = [
-  //       updatedTask[prevInd],
-  //       updatedTask[currentInd],
-  //     ];
-  //   }
-  //   console.log("up");
-  //   setTaskList(updatedTask);
-  //   // if (taskInd < 0) {
-  //   //   [updatedTask[currentInd], updatedTask[prevInd]] = [
-  //   //     updatedTask[prevInd],
-  //   //     updatedTask[currentInd],
-  //   //   ];
-  //   //   setTaskList(updatedTask);
-  //   // }
-  // }
-
   function handleMoveDown(id, status) {
     resetAlerts();
+    const updatedTask = [...taskList];
+    const taskStat = updatedTask.filter((item) => item.status === status);
+    const taskInd = taskStat.findIndex((item) => item.id === id);
+    if (taskInd + 1 === taskStat.length) return updateAlert(status, "down");
     console.log("down");
-    // const updatedTask = [...taskList];
-    // const filTask = updatedTask.filter((item) => item.status === status);
-    // const taskInd = filTask.findIndex((item) => item.id === id);
-    // if (taskInd + 1 === filTask.length) return updateAlert(status, "down");
-    // if (taskInd < filTask.length - 1) {
-    //   [updatedTask[taskInd + 1], updatedTask[taskInd]] = [
-    //     updatedTask[taskInd],
-    //     updatedTask[taskInd + 1],
-    //   ];
-    // }
-    // console.log(taskInd < filTask.length);
-    // setTaskList(updatedTask);
     return;
   }
 
