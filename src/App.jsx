@@ -155,9 +155,14 @@ export default function App() {
     resetAlerts();
     const updatedTask = [...taskList];
     const taskStat = updatedTask.filter((item) => item.status === status);
-    const taskId = taskStat.findIndex((item) => item.id === id);
-    // console.log(taskStat, taskId);
-    if (taskStat.length === taskId + 1) return updateAlert(status, "down");
+    const taskInd = taskStat.findIndex((item) => item.id === id);
+
+    if (taskInd + 1 === taskStat.length) updateAlert(status, "down");
+
+    const currTask = taskStat[taskInd];
+    const prevTask = taskStat[taskInd + 1];
+
+    console.log("down", prevTask);
   }
 
   function handleSubmit(e) {
