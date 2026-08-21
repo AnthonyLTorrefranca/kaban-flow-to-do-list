@@ -152,17 +152,24 @@ export default function App() {
   }
 
   function handleMoveDown(id, status) {
-    resetAlerts();
     const updatedTask = [...taskList];
     const taskStat = updatedTask.filter((item) => item.status === status);
     const taskInd = taskStat.findIndex((item) => item.id === id);
 
-    if (taskInd + 1 === taskStat.length) updateAlert(status, "down");
+    if (taskInd + 1 === taskStat.length) return updateAlert(status, "down");
 
     const currTask = taskStat[taskInd];
     const prevTask = taskStat[taskInd + 1];
 
-    console.log("down", prevTask);
+    const currRealInd = taskList.findIndex((item) => item.id === currTask.id);
+    const prevRealInd = taskList.findIndex((item) => item.id === prevTask.id);
+
+    [updatedTask[currRealInd], updatedTask[prevRealInd]] = [
+      updatedTask[prevRealInd],
+      updatedTask[currRealInd],
+    ];
+    setTaskList(updatedTask);
+    updateAlert(status, "idle");
   }
 
   function handleSubmit(e) {
